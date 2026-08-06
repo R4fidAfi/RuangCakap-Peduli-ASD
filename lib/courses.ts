@@ -31,6 +31,23 @@ export type Course = {
   completed?: boolean;
 };
 
+const categoryLabels: Record<string, string> = {
+  "sehari-hari": "Sehari-hari",
+  "tempat-umum": "Tempat Umum",
+  pendidikan: "Pendidikan",
+  pertemanan: "Pertemanan",
+  kesehatan: "Kesehatan",
+  "dunia-kerja": "Dunia Kerja",
+};
+
+export function categoryLabel(id: string): string {
+  return categoryLabels[id] ?? id;
+}
+
+export function getCourse(id: string): Course | undefined {
+  return courses.find((course) => course.id === id);
+}
+
 export const courses: Course[] = [
   {
     id: "pesan-makanan",

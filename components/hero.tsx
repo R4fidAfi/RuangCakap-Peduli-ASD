@@ -67,7 +67,7 @@ export default function Hero() {
           <h1 className="mt-6 text-4xl font-bold leading-[1.15] tracking-tight text-forest-800 sm:text-5xl">
             Berlatih percakapan,
             <br />
-            tumbuh rasa{" "}
+            tumbuhkan rasa{" "}
             <span className="relative whitespace-nowrap text-leaf-500">
               percaya diri
               <svg

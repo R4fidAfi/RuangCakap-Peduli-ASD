@@ -1,13 +1,28 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { BookOpen, Search, SlidersHorizontal } from "lucide-react";
 import { categories, courses } from "@/lib/courses";
+import { getSessions } from "@/lib/storage";
 import CourseCard from "./course-card";
 
 export default function CourseSection() {
   const [activeCategory, setActiveCategory] = useState("semua");
   const [query, setQuery] = useState("");
+  const [completedByCourse, setCompletedByCourse] = useState<
+    Record<string, number>
+  >({});
+
+  useEffect(() => {
+    const map: Record<string, number> = {};
+    for (const session of getSessions()) {
+      map[session.courseId] = Math.max(
+        map[session.courseId] ?? 0,
+        session.level,
+      );
+    }
+    setCompletedByCourse(map);
+  }, []);
 
   const filtered = useMemo(() => {
     const q = query.trim().toLowerCase();
@@ -88,7 +103,11 @@ export default function CourseSection() {
         {filtered.length > 0 ? (
           <div className="mt-4 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
             {filtered.map((course) => (
-              <CourseCard key={course.id} course={course} />
+              <CourseCard
+                key={course.id}
+                course={course}
+                completedLevels={completedByCourse[course.id] ?? 0}
+              />
             ))}
           </div>
         ) : (

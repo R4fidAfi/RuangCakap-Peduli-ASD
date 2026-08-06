@@ -1,50 +1,21 @@
+import Link from "next/link";
 import { ArrowUpRight, Check } from "lucide-react";
 import type { Course } from "@/lib/courses";
+import { categoryLabel } from "@/lib/courses";
+import { themeClasses } from "@/lib/themes";
 import { courseIcons } from "./icons";
 
-const themeClasses: Record<
-  Course["theme"],
-  { cover: string; pattern: string; text: string }
-> = {
-  mint: {
-    cover: "bg-gradient-to-br from-sage-100 via-sage-100/60 to-white",
-    pattern: "pattern-dots-green",
-    text: "text-forest-700",
-  },
-  mist: {
-    cover: "bg-gradient-to-br from-mist-100 via-mist-50 to-white",
-    pattern: "pattern-dots-green",
-    text: "text-mist-700",
-  },
-  teal: {
-    cover: "bg-gradient-to-br from-teal-200/70 via-teal-200/30 to-white",
-    pattern: "pattern-dots-green",
-    text: "text-teal-600",
-  },
-  forest: {
-    cover: "bg-gradient-to-br from-forest-700 via-leaf-600 to-leaf-400",
-    pattern: "pattern-dots-light",
-    text: "text-white",
-  },
-  sun: {
-    cover: "bg-gradient-to-br from-sun-100 via-sun-100/50 to-white",
-    pattern: "pattern-dots-green",
-    text: "text-forest-700",
-  },
-};
-
-const categoryLabel: Record<string, string> = {
-  "sehari-hari": "Sehari-hari",
-  "tempat-umum": "Tempat Umum",
-  pendidikan: "Pendidikan",
-  pertemanan: "Pertemanan",
-  kesehatan: "Kesehatan",
-  "dunia-kerja": "Dunia Kerja",
-};
-
-export default function CourseCard({ course }: { course: Course }) {
+export default function CourseCard({
+  course,
+  completedLevels = 0,
+}: {
+  course: Course;
+  /** Level tertinggi yang sudah diselesaikan (dari localStorage). */
+  completedLevels?: number;
+}) {
   const theme = themeClasses[course.theme];
   const Icon = courseIcons[course.icon];
+  const effective = Math.max(course.completed ? 1 : 0, completedLevels);
 
   return (
     <article className="group overflow-hidden rounded-3xl border border-sage-200 bg-white shadow-soft transition-all duration-300 hover:-translate-y-1.5 hover:shadow-lift">
@@ -78,7 +49,7 @@ export default function CourseCard({ course }: { course: Course }) {
         <div className="mt-4 flex items-center justify-between">
           <div className="flex items-center gap-3">
             <span className="rounded-full bg-sage-100 px-3 py-1 text-xs font-semibold text-leaf-700">
-              {categoryLabel[course.category] ?? course.category}
+              {categoryLabel(course.category)}
             </span>
             <span
               className="flex items-center gap-1"
@@ -89,35 +60,34 @@ export default function CourseCard({ course }: { course: Course }) {
                 <span
                   key={i}
                   className={`h-2 w-2 rounded-full ${
-                    course.completed || i === 0
-                      ? "bg-leaf-500"
-                      : "bg-sage-300"
+                    i < effective ? "bg-leaf-500" : "bg-sage-300"
                   }`}
                 />
               ))}
             </span>
           </div>
 
-          <a
-            href="#"
+          <Link
+            href={`/skenario/${course.id}`}
             aria-label={`Mulai latihan ${course.title}`}
             className="inline-flex items-center gap-1 rounded-full bg-leaf-500 px-4 py-2 text-xs font-bold text-white transition-all group-hover:gap-1.5 hover:bg-leaf-600"
           >
-            {course.completed ? (
+            {effective >= 1 ? (
               <>
-                Ulangi <ArrowUpRight className="h-3.5 w-3.5" />
+                Lanjut <ArrowUpRight className="h-3.5 w-3.5" />
               </>
             ) : (
               <>
                 Mulai <ArrowUpRight className="h-3.5 w-3.5" />
               </>
             )}
-          </a>
+          </Link>
         </div>
 
-        {course.completed && (
+        {effective >= 1 && (
           <p className="mt-3 flex items-center gap-1.5 text-xs font-semibold text-leaf-600">
-            <Check className="h-3.5 w-3.5" /> Level 1 selesai — lanjut ke Level 2
+            <Check className="h-3.5 w-3.5" /> Level {effective} selesai —
+            lanjut Level {Math.min(3, effective + 1)}
           </p>
         )}
       </div>

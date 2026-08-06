@@ -1,10 +1,10 @@
 import { MessageCircleHeart } from "lucide-react";
 
 const links = [
-  { href: "#", label: "Beranda" },
-  { href: "#latihan", label: "Latihan" },
-  { href: "#", label: "Riwayat" },
-  { href: "#", label: "Progress" },
+  { href: "/", label: "Beranda" },
+  { href: "/#latihan", label: "Latihan" },
+  { href: "/riwayat", label: "Riwayat" },
+  { href: "/progress", label: "Progress" },
 ];
 
 export default function Navbar() {

@@ -23,10 +23,10 @@ export default function Footer() {
           <div>
             <h4 className="text-sm font-bold text-forest-700">Jelajahi</h4>
             <ul className="mt-4 space-y-2.5 text-sm text-ink-soft">
-              <li><a href="#latihan" className="transition-colors hover:text-leaf-600">Katalog Latihan</a></li>
-              <li><a href="#keunggulan" className="transition-colors hover:text-leaf-600">Kenapa RuangCakap</a></li>
-              <li><a href="#" className="transition-colors hover:text-leaf-600">Riwayat Latihan</a></li>
-              <li><a href="#" className="transition-colors hover:text-leaf-600">Progress</a></li>
+              <li><a href="/#latihan" className="transition-colors hover:text-leaf-600">Katalog Latihan</a></li>
+              <li><a href="/#keunggulan" className="transition-colors hover:text-leaf-600">Kenapa RuangCakap</a></li>
+              <li><a href="/riwayat" className="transition-colors hover:text-leaf-600">Riwayat Latihan</a></li>
+              <li><a href="/progress" className="transition-colors hover:text-leaf-600">Progress</a></li>
             </ul>
           </div>
 
