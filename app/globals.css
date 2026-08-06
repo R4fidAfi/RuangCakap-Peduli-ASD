@@ -1,0 +1,97 @@
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Plus Jakarta Sans", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+
+  /* Canvas & neutrals */
+  --color-page: #f6faf7;
+  --color-surface: #ffffff;
+  --color-ink: #22332a;
+  --color-ink-soft: #6b7f72;
+  --color-ink-faint: #93a79b;
+
+  /* Sage greens */
+  --color-sage-100: #e5f0e8;
+  --color-sage-200: #dce8e0;
+  --color-sage-300: #a7c4b0;
+  --color-sage-400: #7fa993;
+
+  /* Leaf greens (primary actions) */
+  --color-leaf-400: #5b9b74;
+  --color-leaf-500: #3e7c59;
+  --color-leaf-600: #356b4e;
+  --color-leaf-700: #2a573f;
+
+  /* Deep forest */
+  --color-forest-600: #295b42;
+  --color-forest-700: #1f4d36;
+  --color-forest-800: #14231c;
+
+  /* Mist blues (accent) */
+  --color-mist-50: #e8f1f8;
+  --color-mist-100: #dceaf5;
+  --color-mist-200: #c7dbea;
+  --color-mist-400: #5b8db8;
+  --color-mist-600: #2e5e8c;
+  --color-mist-700: #244c73;
+
+  /* Teal bridge */
+  --color-teal-200: #c9e5de;
+  --color-teal-400: #5fa394;
+  --color-teal-600: #3e7d6f;
+
+  /* Sun (rare accent) */
+  --color-sun-100: #f5edda;
+  --color-sun-400: #c9a24b;
+
+  --shadow-soft: 0 2px 8px rgba(31, 77, 54, 0.06);
+  --shadow-lift: 0 18px 38px -16px rgba(31, 77, 54, 0.22);
+}
+
+body {
+  background-color: var(--color-page);
+  color: var(--color-ink);
+  font-family: var(--font-sans);
+}
+
+/* Subtle decorative patterns (anti-flat, still calm) */
+@layer utilities {
+  .pattern-dots-light {
+    background-image: radial-gradient(rgba(255, 255, 255, 0.3) 1.5px, transparent 1.5px);
+    background-size: 16px 16px;
+  }
+  .pattern-dots-green {
+    background-image: radial-gradient(rgba(62, 124, 89, 0.13) 1.5px, transparent 1.5px);
+    background-size: 16px 16px;
+  }
+  .pattern-grid-light {
+    background-image:
+      linear-gradient(rgba(255, 255, 255, 0.22) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255, 255, 255, 0.22) 1px, transparent 1px);
+    background-size: 22px 22px;
+  }
+  .pattern-grid-green {
+    background-image:
+      linear-gradient(rgba(62, 124, 89, 0.09) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(62, 124, 89, 0.09) 1px, transparent 1px);
+    background-size: 22px 22px;
+  }
+}
+
+/* Gentle focus ring for accessibility (ASD-friendly, keyboard users) */
+:focus-visible {
+  outline: 3px solid var(--color-mist-400);
+  outline-offset: 2px;
+  border-radius: 8px;
+}
+
+/* Respect users who prefer less motion */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
