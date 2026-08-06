@@ -49,7 +49,7 @@ export default async function ScenarioPage({
         >
           <Icon className="h-20 w-20 text-white/80" />
         </div>
-        <div className="relative px-6 py-14 sm:px-10 sm:py-16">
+        <div className="relative px-6 py-10 sm:px-10 sm:py-16">
           <h1
             className={`max-w-xl text-3xl font-bold leading-tight tracking-tight sm:text-5xl ${theme.text}`}
           >

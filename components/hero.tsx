@@ -56,7 +56,7 @@ export default function Hero() {
         className="absolute -right-32 top-32 h-[28rem] w-[28rem] rounded-full bg-mist-50/80 blur-3xl"
       />
 
-      <div className="relative mx-auto grid max-w-6xl items-center gap-14 px-6 pb-20 pt-16 lg:grid-cols-2 lg:pt-24">
+      <div className="relative mx-auto grid max-w-6xl items-center gap-12 px-5 pb-16 pt-10 sm:px-6 lg:grid-cols-2 lg:pb-20 lg:pt-24">
         {/* Left: copy */}
         <div>
           <span className="inline-flex items-center gap-2 rounded-full border border-sage-200 bg-white px-4 py-1.5 text-xs font-semibold text-leaf-700 shadow-soft">
@@ -87,28 +87,28 @@ export default function Hero() {
             .
           </h1>
 
-          <p className="mt-6 max-w-xl text-lg leading-relaxed text-ink-soft">
+          <p className="mt-5 max-w-xl text-base leading-relaxed text-ink-soft sm:text-lg">
             Hadapi situasi sosial sehari-hari — memesan makanan, bertanya arah,
             bicara dengan dokter — lewat simulasi percakapan bersama AI. Tenang,
             bertahap, dan bisa diulang kapan saja.
           </p>
 
-          <div className="mt-8 flex flex-wrap items-center gap-3">
+          <div className="mt-7 flex flex-wrap items-center gap-3">
             <a
               href="#latihan"
-              className="rounded-full bg-leaf-500 px-7 py-3.5 text-sm font-semibold text-white shadow-lift transition-all hover:-translate-y-0.5 hover:bg-leaf-600"
+              className="rounded-full bg-leaf-500 px-6 py-3 text-sm font-semibold text-white shadow-lift transition-all hover:-translate-y-0.5 hover:bg-leaf-600 sm:px-7 sm:py-3.5"
             >
               Mulai Latihan
             </a>
             <a
               href="#keunggulan"
-              className="rounded-full border border-sage-300 bg-white px-7 py-3.5 text-sm font-semibold text-leaf-700 transition-all hover:-translate-y-0.5 hover:border-leaf-400 hover:bg-sage-100"
+              className="rounded-full border border-sage-300 bg-white px-6 py-3 text-sm font-semibold text-leaf-700 transition-all hover:-translate-y-0.5 hover:border-leaf-400 hover:bg-sage-100 sm:px-7 sm:py-3.5"
             >
               Cara kerjanya
             </a>
           </div>
 
-          <ul className="mt-10 flex flex-wrap gap-x-8 gap-y-3 text-sm font-medium text-ink-soft">
+          <ul className="mt-9 flex flex-wrap gap-x-8 gap-y-2.5 text-sm font-medium text-ink-soft">
             <li className="flex items-center gap-2">
               <ShieldCheck className="h-4.5 w-4.5 text-leaf-500" />
               Aman & suportif
@@ -128,9 +128,9 @@ export default function Hero() {
         <div className="relative mx-auto w-full max-w-md lg:max-w-none">
           <div
             aria-hidden
-            className="absolute -right-4 -top-6 h-24 w-24 rounded-3xl bg-sage-100 pattern-dots-green"
+            className="absolute -right-3 -top-5 h-20 w-20 rounded-3xl bg-sage-100 pattern-dots-green sm:-right-4 sm:-top-6 sm:h-24 sm:w-24"
           />
-          <div className="relative rounded-[2rem] border border-sage-200 bg-white p-6 shadow-lift">
+          <div className="relative rounded-[2rem] border border-sage-200 bg-white p-5 shadow-lift sm:p-6">
             {/* Mock header */}
             <div className="flex items-center justify-between border-b border-sage-200 pb-4">
               <div className="flex items-center gap-3">
@@ -161,7 +161,7 @@ export default function Hero() {
             </div>
 
             {/* Mock mic control */}
-            <div className="mt-6 flex items-center justify-between rounded-2xl border border-sage-200 bg-page px-4 py-3">
+            <div className="mt-6 flex flex-wrap items-center gap-x-3 gap-y-2 rounded-2xl border border-sage-200 bg-page px-4 py-3">
               <span className="flex items-center gap-2 text-sm font-medium text-ink-soft">
                 <span className="grid h-9 w-9 place-items-center rounded-full bg-leaf-500 text-white shadow-soft">
                   <Mic className="h-4 w-4" />

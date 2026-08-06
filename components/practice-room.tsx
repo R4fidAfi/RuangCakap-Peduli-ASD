@@ -392,10 +392,10 @@ export default function PracticeRoom({
   const canSend = !busy && !isDone && !listening && input.trim().length > 0;
 
   return (
-    <main className="flex h-screen flex-col overflow-hidden bg-page">
+    <main className="flex h-dvh flex-col overflow-hidden bg-page">
       {/* Header */}
-      <header className="flex items-center justify-between gap-3 border-b border-sage-200 bg-white/85 px-4 py-3 backdrop-blur-md sm:px-6">
-        <div className="flex min-w-0 items-center gap-3">
+      <header className="flex flex-wrap items-center justify-between gap-x-3 gap-y-2 border-b border-sage-200 bg-white/85 px-4 py-3 backdrop-blur-md sm:px-6">
+        <div className="flex min-w-0 flex-1 items-center gap-2.5 sm:gap-3">
           <Link
             href={`/skenario/${courseId}`}
             aria-label="Kembali ke detail skenario"
@@ -407,14 +407,14 @@ export default function PracticeRoom({
             <p className="truncate text-sm font-bold text-forest-700">
               {courseTitle}
             </p>
-            <p className="text-xs text-ink-faint">
+            <p className="truncate text-xs text-ink-faint">
               {category} · Level {current.level} ({meta.label}) · {current.aiRole}
             </p>
           </div>
         </div>
         <div className="flex shrink-0 items-center gap-2">
           <span
-            className={`inline-flex items-center gap-1.5 rounded-full px-3 py-1 text-xs font-semibold ${
+            className={`hidden items-center gap-1.5 rounded-full px-3 py-1 text-xs font-semibold sm:inline-flex ${
               isDone
                 ? "bg-sage-100 text-leaf-700"
                 : listening
@@ -446,7 +446,7 @@ export default function PracticeRoom({
           <button
             onClick={resetSession}
             disabled={busy}
-            className="inline-flex items-center gap-1.5 rounded-full border border-sage-300 bg-white px-3.5 py-1.5 text-xs font-semibold text-leaf-700 transition-colors hover:bg-sage-100 disabled:opacity-50"
+            className="hidden items-center gap-1.5 rounded-full border border-sage-300 bg-white px-3.5 py-1.5 text-xs font-semibold text-leaf-700 transition-colors hover:bg-sage-100 disabled:opacity-50 sm:inline-flex"
           >
             <RotateCcw className="h-3.5 w-3.5" />
             Ulangi
@@ -525,8 +525,31 @@ export default function PracticeRoom({
 
         {/* Area percakapan */}
         <section className="flex min-h-0 flex-1 flex-col">
+          {/* Konteks ringkas (mobile) */}
+          <div className="border-b border-sage-200 bg-white/60 px-4 pt-3 lg:hidden">
+            <details className="rounded-2xl border border-sage-200 bg-white px-4 py-2.5 shadow-soft">
+              <summary className="cursor-pointer select-none text-xs font-bold text-forest-700">
+                Situasi latihan — ketuk untuk lihat
+              </summary>
+              <div className="mt-2 space-y-1.5 border-t border-sage-200 pt-2 text-xs leading-relaxed text-ink-soft">
+                <p>
+                  <span className="font-semibold text-ink">Peran AI:</span>{" "}
+                  {current.aiRole}
+                </p>
+                <p>
+                  <span className="font-semibold text-ink">Situasi:</span>{" "}
+                  {current.context}
+                </p>
+                <p>
+                  <span className="font-semibold text-ink">Tujuan:</span>{" "}
+                  {current.goal}
+                </p>
+              </div>
+            </details>
+          </div>
+
           <div
-            className="min-h-0 flex-1 space-y-4 overflow-y-auto px-4 py-6 sm:px-6"
+            className="min-h-0 flex-1 space-y-4 overflow-y-auto px-4 py-5 sm:px-6"
             aria-live="polite"
           >
             {turns.length === 0 && !busy && !error && (
@@ -590,7 +613,7 @@ export default function PracticeRoom({
           {/* Panel selesai */}
           {isDone && (
             <div className="border-t border-sage-200 bg-white px-4 py-4 sm:px-6">
-              <div className="mx-auto flex max-w-2xl items-center gap-4 rounded-2xl border border-sage-200 bg-sage-100/60 p-4">
+              <div className="mx-auto flex max-w-2xl flex-col gap-4 rounded-2xl border border-sage-200 bg-sage-100/60 p-4 sm:flex-row sm:items-center">
                 <span className="grid h-11 w-11 shrink-0 place-items-center rounded-full bg-leaf-500 text-white">
                   <CheckCircle2 className="h-6 w-6" />
                 </span>
@@ -604,24 +627,24 @@ export default function PracticeRoom({
                     aspek, saran, dan contoh kalimat.
                   </p>
                 </div>
-                <div className="flex shrink-0 items-center gap-2">
+                <div className="flex w-full shrink-0 flex-wrap gap-2 sm:w-auto">
                   {sessionId && (
                     <Link
                       href={`/feedback/${sessionId}`}
-                      className="inline-flex items-center gap-1.5 rounded-full bg-leaf-500 px-4 py-2 text-xs font-bold text-white transition-colors hover:bg-leaf-600"
+                      className="inline-flex flex-1 items-center justify-center gap-1.5 rounded-full bg-leaf-500 px-4 py-2 text-xs font-bold text-white transition-colors hover:bg-leaf-600 sm:flex-none"
                     >
                       Lihat Evaluasi
                     </Link>
                   )}
                   <button
                     onClick={resetSession}
-                    className="rounded-full border border-sage-300 bg-white px-4 py-2 text-xs font-bold text-leaf-700 transition-colors hover:bg-sage-100"
+                    className="inline-flex flex-1 items-center justify-center rounded-full border border-sage-300 bg-white px-4 py-2 text-xs font-bold text-leaf-700 transition-colors hover:bg-sage-100 sm:flex-none"
                   >
                     Latihan Lagi
                   </button>
                   <Link
                     href={`/skenario/${courseId}`}
-                    className="rounded-full border border-sage-300 bg-white px-4 py-2 text-xs font-bold text-leaf-700 transition-colors hover:bg-sage-100"
+                    className="inline-flex flex-1 items-center justify-center rounded-full border border-sage-300 bg-white px-4 py-2 text-xs font-bold text-leaf-700 transition-colors hover:bg-sage-100 sm:flex-none"
                   >
                     Kembali
                   </Link>
@@ -688,8 +711,8 @@ export default function PracticeRoom({
               </div>
 
               {/* Baris status suara */}
-              <div className="mx-auto mt-2 flex max-w-3xl items-center justify-between gap-2">
-                <p className="truncate text-[11px] text-ink-faint">
+              <div className="mx-auto mt-2 flex max-w-3xl flex-col items-center gap-1.5 sm:flex-row sm:items-center sm:justify-between">
+                <p className="w-full truncate text-center text-[11px] text-ink-faint sm:w-auto sm:text-left">
                   {listening ? (
                     <>
                       {interim || "Bicara sekarang…"} — klik mikrofon lagi untuk

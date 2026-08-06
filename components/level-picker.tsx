@@ -92,7 +92,7 @@ export default function LevelPicker({
               }}
               disabled={locked}
               aria-pressed={active}
-              className={`relative rounded-3xl border p-6 text-left transition-all ${
+              className={`relative rounded-3xl border p-5 text-left transition-all sm:p-6 ${
                 locked
                   ? "cursor-not-allowed border-sage-200 bg-sage-100/50 opacity-75"
                   : active

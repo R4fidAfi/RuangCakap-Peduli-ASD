@@ -34,20 +34,20 @@ export default function CourseCard({
           <Icon className="h-5.5 w-5.5" />
         </div>
         <h3
-          className={`absolute bottom-4 left-4 right-4 text-xl font-bold leading-snug tracking-tight ${theme.text}`}
+          className={`absolute bottom-4 left-4 right-4 text-lg font-bold leading-snug tracking-tight sm:text-xl ${theme.text}`}
         >
           {course.title}
         </h3>
       </div>
 
       {/* Body */}
-      <div className="p-5">
+      <div className="p-4 sm:p-5">
         <p className="line-clamp-2 text-sm leading-relaxed text-ink-soft">
           {course.description}
         </p>
 
-        <div className="mt-4 flex items-center justify-between">
-          <div className="flex items-center gap-3">
+        <div className="mt-4 flex flex-wrap items-center justify-between gap-2">
+          <div className="flex min-w-0 flex-wrap items-center gap-3">
             <span className="rounded-full bg-sage-100 px-3 py-1 text-xs font-semibold text-leaf-700">
               {categoryLabel(course.category)}
             </span>
