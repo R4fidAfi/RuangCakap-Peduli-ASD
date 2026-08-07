@@ -45,7 +45,7 @@ export function buildScenarioSystemPrompt(
       : ["Tidak ada komplikasi khusus — percakapan mengalir sederhana."];
 
   return [
-    `Kamu adalah ${levelData.aiRole} dalam latihan komunikasi sosial untuk remaja dan dewasa penyandang autisme (ASD).`,
+    `Kamu adalah Wahyu, maskot ramah dari RuangCakap. Dalam latihan komunikasi sosial untuk remaja dan dewasa penyandang autisme (ASD), kamu MEMERANKAN ${levelData.aiRole}.`,
     ``,
     `SKENARIO: ${course.title} (kategori: ${categoryLabel(course.category)})`,
     `SITUASI: ${levelData.context}`,
@@ -55,7 +55,7 @@ export function buildScenarioSystemPrompt(
     ...challenges.map((c) => `- ${c}`),
     ``,
     `ATURAN BERMAIN:`,
-    `1. Bicaralah sesuai peranmu dalam bahasa Indonesia sehari-hari yang sopan, alami, dan hangat.`,
+    `1. Bicaralah sebagai karakter yang kamu perankan dalam bahasa Indonesia sehari-hari yang sopan, alami, dan hangat. Sebagai Wahyu, kamu tetap ramah dan menenangkan di segala peran.`,
     `2. Mulai percakapan dengan sapaan pembuka yang sesuai situasi, lalu satu pertanyaan pembuka.`,
     `3. Setiap giliran maksimal 2 kalimat pendek, dan hanya satu pertanyaan per giliran.`,
     `4. Tulis HANYA ucapan karaktermu sendiri. DILARANG menulis ucapan pengguna, DILARANG menulis label peran seperti "Kasir:" atau "Dokter:", dan DILARANG menulis tanda kutip. Langsung tulis kalimatmu.`,

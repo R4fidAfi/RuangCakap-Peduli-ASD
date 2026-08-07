@@ -88,29 +88,40 @@ function ProgressContent() {
             icon: BookOpenText,
             label: "Latihan selesai",
             value: String(stats.totalSessions),
+            tile: "bg-gradient-to-br from-leaf-400 to-leaf-600 text-forest-800",
           },
           {
             icon: MessageCircle,
             label: "Jawaban diberikan",
             value: String(stats.totalAnswers),
+            tile: "bg-gradient-to-br from-mist-400 to-mist-600 text-white",
           },
           {
             icon: Award,
             label: "Rata-rata skor",
             value: stats.overallAvg !== null ? String(stats.overallAvg) : "—",
+            tile: "bg-gradient-to-br from-sun-400 to-leaf-600 text-forest-800",
           },
         ].map((item) => (
           <div
             key={item.label}
-            className="rounded-3xl border border-sage-200 bg-white p-5 shadow-soft"
+            className="relative overflow-hidden rounded-3xl border border-sage-200 bg-white p-5 shadow-soft transition-all hover:-translate-y-0.5 hover:shadow-lift"
           >
-            <span className="grid h-10 w-10 place-items-center rounded-xl bg-sage-100 text-leaf-600">
+            <div
+              aria-hidden
+              className="absolute -right-4 -top-4 h-16 w-16 rounded-full bg-sage-100/60"
+            />
+            <span
+              className={`relative grid h-10 w-10 place-items-center rounded-xl shadow-soft ${item.tile}`}
+            >
               <item.icon className="h-5 w-5" />
             </span>
-            <p className="mt-3 text-2xl font-bold text-forest-800">
+            <p className="relative mt-3 text-2xl font-bold text-forest-800">
               {item.value}
             </p>
-            <p className="text-xs font-semibold text-ink-soft">{item.label}</p>
+            <p className="relative text-xs font-semibold text-ink-soft">
+              {item.label}
+            </p>
           </div>
         ))}
       </div>
@@ -218,7 +229,7 @@ function ProgressContent() {
                 </div>
                 <div className="mt-2 h-2 overflow-hidden rounded-full bg-sage-200">
                   <div
-                    className="h-full rounded-full bg-leaf-500 transition-all duration-700"
+                    className="h-full rounded-full bg-gradient-to-r from-leaf-400 to-leaf-600 transition-all duration-700"
                     style={{ width: `${aspect.avg}%` }}
                   />
                 </div>
@@ -237,24 +248,42 @@ function ProgressContent() {
           Per kategori
         </h2>
         <div className="mt-4 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
-          {stats.byCategory.map((category) => (
-            <div
-              key={category.id}
-              className="rounded-2xl border border-sage-200 bg-white p-4 shadow-soft"
-            >
-              <p className="text-sm font-bold text-forest-700">
-                {category.label}
-              </p>
-              <p className="mt-1 text-xs text-ink-soft">
-                {category.sessions} latihan
+          {stats.byCategory.map((category, index) => {
+            const accents = [
+              "border-leaf-500",
+              "border-mist-400",
+              "border-teal-400",
+              "border-sun-400",
+            ];
+            return (
+              <div
+                key={category.id}
+                className={`rounded-2xl border border-sage-200 border-l-4 bg-white p-4 shadow-soft transition-all hover:-translate-y-0.5 hover:shadow-lift ${
+                  accents[index % accents.length]
+                }`}
+              >
+                <p className="text-sm font-bold text-forest-700">
+                  {category.label}
+                </p>
+                <p className="mt-1 text-xs text-ink-soft">
+                  {category.sessions} latihan
+                  {category.avg !== null && (
+                    <span className="ml-2 rounded-full bg-sage-100 px-2 py-0.5 font-bold text-leaf-700">
+                      skor {category.avg}
+                    </span>
+                  )}
+                </p>
                 {category.avg !== null && (
-                  <span className="ml-2 rounded-full bg-sage-100 px-2 py-0.5 font-bold text-leaf-700">
-                    skor {category.avg}
-                  </span>
+                  <div className="mt-2.5 h-1.5 overflow-hidden rounded-full bg-sage-200">
+                    <div
+                      className="h-full rounded-full bg-gradient-to-r from-leaf-400 to-leaf-600"
+                      style={{ width: `${category.avg}%` }}
+                    />
+                  </div>
                 )}
-              </p>
-            </div>
-          ))}
+              </div>
+            );
+          })}
         </div>
       </section>
 

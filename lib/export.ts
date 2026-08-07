@@ -90,7 +90,7 @@ function sessionToHtmlReport(session: StoredSession): string {
 
   const chat = session.turns
     .map((turn) => {
-      const who = turn.role === "ai" ? "AI (Maskot)" : "Pengguna";
+      const who = turn.role === "ai" ? "Wahyu" : "Pengguna";
       return `<div class="bubble ${turn.role}"><span class="who">${who}</span>${esc(turn.text)}</div>`;
     })
     .join("\n");

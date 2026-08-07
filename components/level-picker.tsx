@@ -85,7 +85,7 @@ export default function LevelPicker({
       : ["Percakapan mengalir sederhana tanpa kejutan."];
 
   return (
-    <section aria-label="Pilih tingkat kesulitan">
+    <section aria-label="Pilih tingkat kesulitan" className="pb-24 lg:pb-0">
       <div className="flex flex-wrap items-end justify-between gap-2">
         <div>
           <h2 className="text-2xl font-bold tracking-tight text-forest-800">
@@ -162,10 +162,10 @@ export default function LevelPicker({
                   )}
                 </span>
                 <span className="mt-0.5 block truncate text-sm font-bold text-forest-700">
-                  {meta.label}
+                  {LEVEL_META[level.level].label}
                 </span>
                 <span className="mt-0.5 block truncate text-xs text-ink-soft">
-                  {meta.blurb}
+                  {LEVEL_META[level.level].blurb}
                 </span>
                 <span className="mt-1.5 flex flex-wrap items-center gap-1.5">
                   {locked ? (
@@ -240,7 +240,7 @@ export default function LevelPicker({
           <dl className="mt-5 grid gap-4 sm:grid-cols-2">
             <div className="rounded-2xl border border-sage-200 bg-page p-4">
               <dt className="flex items-center gap-2 text-xs font-bold uppercase tracking-wide text-ink-faint">
-                <Bot className="h-4 w-4 text-mist-400" /> Peran AI
+                <Bot className="h-4 w-4 text-mist-400" /> Peran AI · Wahyu
               </dt>
               <dd className="mt-2 text-sm font-semibold leading-relaxed text-ink">
                 {current.aiRole}
@@ -311,6 +311,17 @@ export default function LevelPicker({
             </ul>
           </div>
         </aside>
+      </div>
+
+      {/* CTA bawah sticky — selalu dalam jangkauan jempol di HP */}
+      <div className="fixed inset-x-0 bottom-0 z-40 border-t border-sage-200 bg-white/95 px-4 py-3 backdrop-blur-md lg:hidden">
+        <Link
+          href={`/latihan/${courseId}?level=${selected}`}
+          className="flex w-full items-center justify-center gap-2 rounded-full bg-leaf-500 px-6 py-3.5 text-sm font-bold text-forest-800 shadow-lift transition-colors hover:bg-leaf-600"
+        >
+          Mulai Latihan Level {selected}
+          <ArrowUpRight className="h-4 w-4" />
+        </Link>
       </div>
     </section>
   );

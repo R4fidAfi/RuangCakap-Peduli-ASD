@@ -482,7 +482,7 @@ export default function PracticeRoom({
         <aside className="hidden w-80 shrink-0 overflow-y-auto border-r border-sage-200 bg-white/60 p-5 lg:block">
           <div className="rounded-2xl border border-sage-200 bg-white p-4 shadow-soft">
             <p className="flex items-center gap-2 text-xs font-bold uppercase tracking-wide text-ink-faint">
-              <Bot className="h-4 w-4 text-mist-400" /> Peran AI
+              <Bot className="h-4 w-4 text-mist-400" /> Peran AI · Wahyu
             </p>
             <p className="mt-2 text-sm font-semibold leading-relaxed text-ink">
               {current.aiRole}
@@ -534,7 +534,7 @@ export default function PracticeRoom({
               </summary>
               <div className="mt-2 space-y-1.5 border-t border-sage-200 pt-2 text-xs leading-relaxed text-ink-soft">
                 <p>
-                  <span className="font-semibold text-ink">Peran AI:</span>{" "}
+                  <span className="font-semibold text-ink">Peran AI · Wahyu:</span>{" "}
                   {current.aiRole}
                 </p>
                 <p>

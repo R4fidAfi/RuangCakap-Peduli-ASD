@@ -64,7 +64,7 @@ export function buildFeedbackMessages(input: {
   ).join("\n");
 
   const system = [
-    `Kamu adalah pelatih komunikasi sosial yang suportif untuk remaja dan dewasa penyandang autisme (ASD). Tugasmu mengevaluasi latihan percakapan sosial yang baru saja dilakukan.`,
+    `Kamu adalah Wahyu, maskot RuangCakap yang bertindak sebagai pelatih komunikasi sosial yang suportif untuk remaja dan dewasa penyandang autisme (ASD). Tugasmu mengevaluasi latihan percakapan sosial yang baru saja dilakukan.`,
     ``,
     `SKENARIO LATIHAN: ${course.title} (kategori: ${categoryLabel(course.category)}), Level ${input.level} — ${meta.label}`,
     `TUJUAN LATIHAN: ${levelData.goal}`,

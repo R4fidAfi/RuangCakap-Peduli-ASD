@@ -340,7 +340,7 @@ function FeedbackContent() {
                   const text = session.turns
                     .map(
                       (t) =>
-                        `${t.role === "ai" ? "AI" : "Kamu"}: ${t.text}`,
+                        `${t.role === "ai" ? "Wahyu" : "Kamu"}: ${t.text}`,
                     )
                     .join("\n\n");
                   await navigator.clipboard.writeText(text).catch(() => {});
@@ -363,7 +363,7 @@ function FeedbackContent() {
                       }`}
                     >
                       <span className="mb-1 block text-[10px] font-bold uppercase tracking-wide text-ink-faint">
-                        {turn.role === "ai" ? "AI" : "Kamu"}
+                        {turn.role === "ai" ? "Wahyu" : "Kamu"}
                       </span>
                       {turn.text}
                     </div>

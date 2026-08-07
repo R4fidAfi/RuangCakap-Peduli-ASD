@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import { LogOut, Save } from "lucide-react";
+import { ChevronDown, LogOut, Save } from "lucide-react";
 import RequireAuth from "@/components/require-auth";
 import AppShell from "@/components/app-shell";
 import Avatar from "@/components/avatar";
@@ -106,23 +106,27 @@ export default function ProfilPage() {
 
           {/* Tujuan */}
           <div>
-            <p className="text-sm font-semibold text-ink">Tujuan belajar</p>
-            <div className="mt-2 flex flex-wrap gap-2">
-              {GOALS.map((g) => (
-                <button
-                  key={g}
-                  type="button"
-                  onClick={() => setGoal(g === goal ? "" : g)}
-                  aria-pressed={goal === g}
-                  className={`rounded-full px-4 py-2 text-xs font-semibold transition-all ${
-                    goal === g
-                      ? "bg-leaf-500 text-forest-800 shadow-soft"
-                      : "border border-sage-200 bg-white text-ink-soft hover:border-leaf-400"
-                  }`}
-                >
-                  {g}
-                </button>
-              ))}
+            <label
+              htmlFor="profile-goal"
+              className="block text-sm font-semibold text-ink"
+            >
+              Tujuan belajar
+            </label>
+            <div className="relative mt-2">
+              <ChevronDown className="pointer-events-none absolute right-4 top-1/2 h-4 w-4 -translate-y-1/2 text-ink-faint" />
+              <select
+                id="profile-goal"
+                value={goal}
+                onChange={(e) => setGoal(e.target.value)}
+                className="w-full appearance-none rounded-2xl border border-sage-200 bg-white px-4 py-3 pr-11 text-sm text-ink focus:border-leaf-400 focus:outline-none"
+              >
+                <option value="">Pilih tujuan belajarmu…</option>
+                {GOALS.map((g) => (
+                  <option key={g} value={g}>
+                    {g}
+                  </option>
+                ))}
+              </select>
             </div>
           </div>
 

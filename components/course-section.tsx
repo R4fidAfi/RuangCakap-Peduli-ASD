@@ -1,10 +1,11 @@
 "use client";
 
 import { useEffect, useMemo, useState } from "react";
-import { BookOpen, Search, SlidersHorizontal } from "lucide-react";
+import { BookOpen, Search, SlidersHorizontal, Sparkles } from "lucide-react";
 import { categories, courses } from "@/lib/courses";
 import { getSessions } from "@/lib/storage";
 import CourseCard from "./course-card";
+import Mascot from "./mascot";
 
 export default function CourseSection() {
   const [activeCategory, setActiveCategory] = useState("semua");
@@ -39,17 +40,32 @@ export default function CourseSection() {
 
   return (
     <section className="mx-auto max-w-6xl px-1 py-2 sm:px-1">
-      {/* Section header */}
-      <div className="max-w-2xl">
-        <span className="text-sm font-bold uppercase tracking-widest text-leaf-700">
+      {/* Section header — ajakan, di tengah, dengan maskot & bintang */}
+      <div className="relative mx-auto max-w-2xl pt-4 text-center">
+        {/* Bintang kerlip di sekitar judul */}
+        <Sparkles
+          aria-hidden
+          className="twinkle-soft absolute -left-2 top-6 h-5 w-5 text-sun-400 sm:-left-8"
+        />
+        <Sparkles
+          aria-hidden
+          className="twinkle-soft absolute -right-1 top-14 h-4 w-4 text-leaf-500 sm:-right-6"
+          style={{ animationDelay: "1.2s" }}
+        />
+        <Mascot
+          motion="idle"
+          mood="happy"
+          className="mx-auto h-16 w-16 drop-shadow-md"
+        />
+        <span className="mt-2 inline-block text-sm font-bold uppercase tracking-widest text-leaf-700">
           Katalog Latihan
         </span>
-        <h2 className="mt-3 text-3xl font-bold tracking-tight text-forest-800 sm:text-4xl">
-          Pilih Latihanmu
+        <h2 className="mt-2 text-3xl font-bold tracking-tight text-forest-800 sm:text-4xl">
+          Pilih latihanmu hari ini ✨
         </h2>
-        <p className="mt-2 max-w-xl text-sm leading-relaxed text-ink-soft">
-          Pilih situasi yang mau kamu latih — setiap skenario punya 3 tingkat
-          kesulitan.
+        <p className="mx-auto mt-2 max-w-md text-sm leading-relaxed text-ink-soft">
+          Situasi apa yang mau kamu coba? Semua skenario aman, bisa diulang,
+          dan punya 3 tingkat kesulitan.
         </p>
       </div>
 
