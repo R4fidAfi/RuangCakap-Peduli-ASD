@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { ArrowLeft, Clock, Layers, Mic, MessageCircle } from "lucide-react";
+import RequireAuth from "@/components/require-auth";
 import { categoryLabel, getCourse } from "@/lib/courses";
 import { getScenarioLevels } from "@/lib/scenarios";
 import { themeClasses } from "@/lib/themes";
@@ -21,9 +22,10 @@ export default async function ScenarioPage({
   const Icon = courseIcons[course.icon];
 
   return (
-    <main className="mx-auto max-w-6xl px-6 py-10">
+    <RequireAuth>
+      <main className="mx-auto max-w-6xl px-6 py-10">
       <Link
-        href="/#latihan"
+        href="/latihan"
         className="inline-flex items-center gap-2 text-sm font-semibold text-ink-soft transition-colors hover:text-leaf-600"
       >
         <ArrowLeft className="h-4 w-4" />
@@ -123,6 +125,7 @@ export default async function ScenarioPage({
           levels={levels}
         />
       </div>
-    </main>
+      </main>
+    </RequireAuth>
   );
 }

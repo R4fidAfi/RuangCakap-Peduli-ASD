@@ -10,6 +10,8 @@ import {
   FileText,
   Trash2,
 } from "lucide-react";
+import RequireAuth from "@/components/require-auth";
+import AppShell from "@/components/app-shell";
 import { getSessions, type StoredSession } from "@/lib/storage";
 import { sessionAverage } from "@/lib/stats";
 import {
@@ -33,7 +35,7 @@ function formatDate(iso: string): string {
   }
 }
 
-export default function RiwayatPage() {
+function RiwayatContent() {
   const [sessions, setSessions] = useState<StoredSession[] | null>(null);
   const [confirmClear, setConfirmClear] = useState(false);
 
@@ -53,7 +55,7 @@ export default function RiwayatPage() {
     <main className="mx-auto max-w-4xl px-6 py-10">
       <div className="flex flex-wrap items-end justify-between gap-4">
         <div>
-          <p className="text-xs font-bold uppercase tracking-widest text-leaf-500">
+          <p className="text-xs font-bold uppercase tracking-widest text-leaf-700">
             Riwayat Latihan
           </p>
           <h1 className="mt-1 text-3xl font-bold tracking-tight text-forest-800">
@@ -103,7 +105,7 @@ export default function RiwayatPage() {
 
       {sessions.length === 0 ? (
         <div className="mt-10 rounded-3xl border border-dashed border-sage-300 bg-white px-6 py-16 text-center">
-          <span className="mx-auto grid h-14 w-14 place-items-center rounded-2xl bg-sage-100 text-leaf-500">
+          <span className="mx-auto grid h-14 w-14 place-items-center rounded-2xl bg-sage-100 text-leaf-700">
             <BookOpenText className="h-7 w-7" />
           </span>
           <h2 className="mt-4 text-lg font-bold text-forest-700">
@@ -114,8 +116,8 @@ export default function RiwayatPage() {
             sini lengkap dengan transkripnya.
           </p>
           <Link
-            href="/#latihan"
-            className="mt-6 inline-flex rounded-full bg-leaf-500 px-6 py-3 text-sm font-semibold text-white transition-colors hover:bg-leaf-600"
+            href="/latihan"
+            className="mt-6 inline-flex rounded-full bg-leaf-500 px-6 py-3 text-sm font-semibold text-forest-800 transition-colors hover:bg-leaf-600"
           >
             Pilih Latihan Pertama
           </Link>
@@ -157,7 +159,7 @@ export default function RiwayatPage() {
                   <div className="flex shrink-0 flex-wrap gap-2">
                     <Link
                       href={`/feedback/${session.id}`}
-                      className="inline-flex items-center gap-1.5 rounded-full bg-leaf-500 px-4 py-2 text-xs font-bold text-white transition-colors hover:bg-leaf-600"
+                      className="inline-flex items-center gap-1.5 rounded-full bg-leaf-500 px-4 py-2 text-xs font-bold text-forest-800 transition-colors hover:bg-leaf-600"
                     >
                       Evaluasi & Transkrip
                     </Link>
@@ -185,5 +187,15 @@ export default function RiwayatPage() {
         </div>
       )}
     </main>
+  );
+}
+
+export default function RiwayatPage() {
+  return (
+    <RequireAuth>
+      <AppShell>
+        <RiwayatContent />
+      </AppShell>
+    </RequireAuth>
   );
 }

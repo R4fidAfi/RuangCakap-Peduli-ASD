@@ -6,14 +6,21 @@ import {
   ArrowUpRight,
   Award,
   BookOpenText,
+  CalendarDays,
+  Compass,
+  Footprints,
   MessageCircle,
+  Repeat,
   TrendingUp,
+  Trophy,
 } from "lucide-react";
+import RequireAuth from "@/components/require-auth";
+import AppShell from "@/components/app-shell";
 import { getSessions } from "@/lib/storage";
-import { computeStats } from "@/lib/stats";
+import { computeStats, sessionAverage } from "@/lib/stats";
 import RecommendationBanner from "@/components/recommendation-banner";
 
-export default function ProgressPage() {
+function ProgressContent() {
   const [sessions, setSessions] = useState<ReturnType<typeof getSessions> | null>(null);
 
   useEffect(() => {
@@ -33,14 +40,14 @@ export default function ProgressPage() {
   if (stats.totalSessions === 0) {
     return (
       <main className="mx-auto max-w-5xl px-6 py-10">
-        <p className="text-xs font-bold uppercase tracking-widest text-leaf-500">
+        <p className="text-xs font-bold uppercase tracking-widest text-leaf-700">
           Progress
         </p>
         <h1 className="mt-1 text-3xl font-bold tracking-tight text-forest-800">
           Perkembanganmu
         </h1>
         <div className="mt-10 rounded-3xl border border-dashed border-sage-300 bg-white px-6 py-16 text-center">
-          <span className="mx-auto grid h-14 w-14 place-items-center rounded-2xl bg-sage-100 text-leaf-500">
+          <span className="mx-auto grid h-14 w-14 place-items-center rounded-2xl bg-sage-100 text-leaf-700">
             <TrendingUp className="h-7 w-7" />
           </span>
           <h2 className="mt-4 text-lg font-bold text-forest-700">
@@ -51,8 +58,8 @@ export default function ProgressPage() {
             adaptif akan muncul di sini.
           </p>
           <Link
-            href="/#latihan"
-            className="mt-6 inline-flex rounded-full bg-leaf-500 px-6 py-3 text-sm font-semibold text-white transition-colors hover:bg-leaf-600"
+            href="/latihan"
+            className="mt-6 inline-flex rounded-full bg-leaf-500 px-6 py-3 text-sm font-semibold text-forest-800 transition-colors hover:bg-leaf-600"
           >
             Pilih Latihan Pertama
           </Link>
@@ -63,7 +70,7 @@ export default function ProgressPage() {
 
   return (
     <main className="mx-auto max-w-5xl px-6 py-10">
-      <p className="text-xs font-bold uppercase tracking-widest text-leaf-500">
+      <p className="text-xs font-bold uppercase tracking-widest text-leaf-700">
         Progress
       </p>
       <h1 className="mt-1 text-3xl font-bold tracking-tight text-forest-800">
@@ -108,6 +115,87 @@ export default function ProgressPage() {
           </div>
         ))}
       </div>
+
+      {/* Achievement */}
+      <section className="mt-10">
+        <h2 className="text-lg font-bold tracking-tight text-forest-800">
+          Pencapaian
+        </h2>
+        <p className="mt-1 text-sm text-ink-soft">
+          Badge didapat otomatis saat syaratnya terpenuhi — tanpa hukuman,
+          hanya apresiasi.
+        </p>
+        <div className="mt-4 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+          {(() => {
+            const days = new Set(
+              sessions.map((s) => s.finishedAt.slice(0, 10)),
+            ).size;
+            const coursesDone = new Set(sessions.map((s) => s.courseId)).size;
+            const badges = [
+              {
+                icon: Footprints,
+                title: "Langkah Pertama",
+                desc: "Selesaikan 1 latihan",
+                done: stats.totalSessions >= 1,
+              },
+              {
+                icon: Repeat,
+                title: "Rajin Berlatih",
+                desc: "Selesaikan 5 latihan",
+                done: stats.totalSessions >= 5,
+              },
+              {
+                icon: CalendarDays,
+                title: "Konsisten",
+                desc: "Latihan di 3 hari berbeda",
+                done: days >= 3,
+              },
+              {
+                icon: Compass,
+                title: "Penjelajah",
+                desc: "Coba 5 skenario berbeda",
+                done: coursesDone >= 5,
+              },
+              {
+                icon: Trophy,
+                title: "Cakap",
+                desc: "Skor ≥ 85 di Level 3",
+                done: sessions.some(
+                  (s) => s.level === 3 && (sessionAverage(s) ?? 0) >= 85,
+                ),
+              },
+            ];
+            return badges.map((badge) => (
+              <div
+                key={badge.title}
+                className={`flex items-center gap-3 rounded-2xl border p-4 shadow-soft ${
+                  badge.done
+                    ? "border-sage-200 bg-white"
+                    : "border-sage-200 bg-sage-100/40 opacity-60"
+                }`}
+              >
+                <span
+                  className={`grid h-11 w-11 shrink-0 place-items-center rounded-2xl ${
+                    badge.done
+                      ? "bg-leaf-500 text-forest-800"
+                      : "bg-white text-ink-faint"
+                  }`}
+                >
+                  <badge.icon className="h-5.5 w-5.5" />
+                </span>
+                <div className="min-w-0">
+                  <p className="text-sm font-bold text-forest-700">
+                    {badge.title}
+                  </p>
+                  <p className="text-xs text-ink-soft">
+                    {badge.done ? "Diraih ✓" : badge.desc}
+                  </p>
+                </div>
+              </div>
+            ));
+          })()}
+        </div>
+      </section>
 
       {/* Per aspek */}
       {stats.aspectAverages.length > 0 && (
@@ -187,7 +275,7 @@ export default function ProgressPage() {
                 <p className="text-sm font-bold text-forest-700">
                   {course.courseTitle}
                 </p>
-                <ArrowUpRight className="h-4 w-4 text-leaf-500 opacity-0 transition-opacity group-hover:opacity-100" />
+                <ArrowUpRight className="h-4 w-4 text-leaf-700 opacity-0 transition-opacity group-hover:opacity-100" />
               </div>
               <div className="mt-2 flex items-center gap-1" aria-label={`Level tercapai: ${course.highestLevel} dari 3`}>
                 {[1, 2, 3].map((lvl) => (
@@ -219,5 +307,15 @@ export default function ProgressPage() {
         </div>
       </section>
     </main>
+  );
+}
+
+export default function ProgressPage() {
+  return (
+    <RequireAuth>
+      <AppShell>
+        <ProgressContent />
+      </AppShell>
+    </RequireAuth>
   );
 }

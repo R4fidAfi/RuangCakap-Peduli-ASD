@@ -14,6 +14,7 @@ import {
   RefreshCw,
   Sparkles,
 } from "lucide-react";
+import RequireAuth from "@/components/require-auth";
 import { getSession, saveSession, type StoredSession } from "@/lib/storage";
 import type { FeedbackResult } from "@/lib/ai/feedback";
 
@@ -83,7 +84,7 @@ function AspectBar({ aspect }: { aspect: FeedbackResult["aspects"][number] }) {
   );
 }
 
-export default function FeedbackPage() {
+function FeedbackContent() {
   const params = useParams<{ sessionId: string }>();
   const sessionId = params?.sessionId ?? "";
 
@@ -163,7 +164,7 @@ export default function FeedbackPage() {
   if (!session) {
     return (
       <main className="mx-auto flex min-h-screen max-w-3xl flex-col items-center justify-center px-6 text-center">
-        <span className="grid h-16 w-16 place-items-center rounded-3xl bg-sage-100 text-leaf-500">
+        <span className="grid h-16 w-16 place-items-center rounded-3xl bg-sage-100 text-leaf-700">
           <BookOpenText className="h-8 w-8" />
         </span>
         <h1 className="mt-6 text-2xl font-bold text-forest-800">
@@ -175,7 +176,7 @@ export default function FeedbackPage() {
         </p>
         <Link
           href="/riwayat"
-          className="mt-6 inline-flex items-center gap-2 rounded-full bg-leaf-500 px-6 py-3 text-sm font-semibold text-white transition-colors hover:bg-leaf-600"
+          className="mt-6 inline-flex items-center gap-2 rounded-full bg-leaf-500 px-6 py-3 text-sm font-semibold text-forest-800 transition-colors hover:bg-leaf-600"
         >
           <ArrowLeft className="h-4 w-4" /> Ke Riwayat Latihan
         </Link>
@@ -197,7 +198,7 @@ export default function FeedbackPage() {
 
       <div className="mt-6 flex flex-wrap items-end justify-between gap-4">
         <div>
-          <p className="text-xs font-bold uppercase tracking-widest text-leaf-500">
+          <p className="text-xs font-bold uppercase tracking-widest text-leaf-700">
             Evaluasi Latihan
           </p>
           <h1 className="mt-1 text-3xl font-bold tracking-tight text-forest-800">
@@ -238,7 +239,7 @@ export default function FeedbackPage() {
           <p className="mt-1 text-sm text-ink-soft">{errorMsg}</p>
           <button
             onClick={() => void generateFeedback()}
-            className="mt-5 inline-flex items-center gap-2 rounded-full bg-leaf-500 px-6 py-3 text-sm font-semibold text-white transition-colors hover:bg-leaf-600"
+            className="mt-5 inline-flex items-center gap-2 rounded-full bg-leaf-500 px-6 py-3 text-sm font-semibold text-forest-800 transition-colors hover:bg-leaf-600"
           >
             <RefreshCw className="h-4 w-4" /> Coba Lagi
           </button>
@@ -374,5 +375,13 @@ export default function FeedbackPage() {
         </>
       )}
     </main>
+  );
+}
+
+export default function FeedbackPage() {
+  return (
+    <RequireAuth>
+      <FeedbackContent />
+    </RequireAuth>
   );
 }

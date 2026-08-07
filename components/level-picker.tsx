@@ -101,7 +101,7 @@ export default function LevelPicker({
               }`}
             >
               {active && (
-                <span className="absolute right-5 top-5 grid h-6 w-6 place-items-center rounded-full bg-leaf-500 text-white">
+                <span className="absolute right-5 top-5 grid h-6 w-6 place-items-center rounded-full bg-leaf-500 text-forest-800">
                   <Check className="h-3.5 w-3.5" />
                 </span>
               )}
@@ -110,13 +110,13 @@ export default function LevelPicker({
                   locked
                     ? "bg-white/70 text-ink-faint"
                     : active
-                      ? "bg-leaf-500 text-white"
+                      ? "bg-leaf-500 text-forest-800"
                       : "bg-sage-100 text-leaf-600"
                 }`}
               >
                 <LevelIcon className="h-5.5 w-5.5" />
               </span>
-              <p className="mt-4 text-xs font-bold uppercase tracking-widest text-leaf-500">
+              <p className="mt-4 text-xs font-bold uppercase tracking-widest text-leaf-700">
                 Level {level.level}
               </p>
               <h3 className="mt-1 text-lg font-bold text-forest-700">
@@ -157,7 +157,7 @@ export default function LevelPicker({
               <Icon className="h-5.5 w-5.5" />
             </span>
             <div>
-              <p className="text-xs font-bold uppercase tracking-widest text-leaf-500">
+              <p className="text-xs font-bold uppercase tracking-widest text-leaf-700">
                 Level {current.level} — {meta.label}
               </p>
               <p className="text-lg font-bold text-forest-700">{courseTitle}</p>
@@ -175,7 +175,7 @@ export default function LevelPicker({
             </div>
             <div className="rounded-2xl border border-sage-200 bg-page p-4">
               <dt className="flex items-center gap-2 text-xs font-bold uppercase tracking-wide text-ink-faint">
-                <Target className="h-4 w-4 text-leaf-500" /> Tujuan latihan
+                <Target className="h-4 w-4 text-leaf-700" /> Tujuan latihan
               </dt>
               <dd className="mt-2 text-sm leading-relaxed text-ink">
                 {current.goal}
@@ -207,7 +207,7 @@ export default function LevelPicker({
         {/* Sticky CTA */}
         <aside className="lg:sticky lg:top-24 lg:self-start">
           <div className="rounded-3xl border border-sage-200 bg-white p-6 shadow-soft">
-            <p className="text-xs font-bold uppercase tracking-widest text-leaf-500">
+            <p className="text-xs font-bold uppercase tracking-widest text-leaf-700">
               Siap mencoba?
             </p>
             <p className="mt-2 text-sm leading-relaxed text-ink-soft">
@@ -217,7 +217,7 @@ export default function LevelPicker({
             </p>
             <Link
               href={`/latihan/${courseId}?level=${current.level}`}
-              className="mt-5 inline-flex w-full items-center justify-center gap-2 rounded-full bg-leaf-500 px-6 py-3.5 text-sm font-bold text-white shadow-lift transition-all hover:-translate-y-0.5 hover:bg-leaf-600"
+              className="mt-5 inline-flex w-full items-center justify-center gap-2 rounded-full bg-leaf-500 px-6 py-3.5 text-sm font-bold text-forest-800 shadow-lift transition-all hover:-translate-y-0.5 hover:bg-leaf-600"
             >
               Mulai Latihan Level {current.level}
               <ArrowUpRight className="h-4 w-4" />
@@ -228,7 +228,7 @@ export default function LevelPicker({
                 saja
               </li>
               <li className="flex items-center gap-2">
-                <ShieldCheck className="h-4 w-4 text-leaf-500" /> Tanpa penilaian
+                <ShieldCheck className="h-4 w-4 text-leaf-700" /> Tanpa penilaian
                 yang menghakimi
               </li>
               <li className="flex items-center gap-2">

@@ -418,7 +418,7 @@ export default function PracticeRoom({
               isDone
                 ? "bg-sage-100 text-leaf-700"
                 : listening
-                  ? "bg-leaf-500 text-white"
+                  ? "bg-leaf-500 text-forest-800"
                   : busy
                     ? "bg-mist-50 text-mist-600"
                     : "bg-sage-100 text-leaf-700"
@@ -459,7 +459,7 @@ export default function PracticeRoom({
             }}
             disabled={busy || turns.length === 0 || isDone}
             title="Akhiri latihan dan lihat evaluasi"
-            className="inline-flex items-center gap-1.5 rounded-full bg-leaf-500 px-3.5 py-1.5 text-xs font-semibold text-white transition-colors hover:bg-leaf-600 disabled:opacity-50"
+            className="inline-flex items-center gap-1.5 rounded-full bg-leaf-500 px-3.5 py-1.5 text-xs font-semibold text-forest-800 transition-colors hover:bg-leaf-600 disabled:opacity-50"
           >
             <Flag className="h-3.5 w-3.5" />
             Selesai
@@ -489,7 +489,7 @@ export default function PracticeRoom({
           </div>
           <div className="mt-3 rounded-2xl border border-sage-200 bg-white p-4 shadow-soft">
             <p className="flex items-center gap-2 text-xs font-bold uppercase tracking-wide text-ink-faint">
-              <Target className="h-4 w-4 text-leaf-500" /> Tujuan latihan
+              <Target className="h-4 w-4 text-leaf-700" /> Tujuan latihan
             </p>
             <p className="mt-2 text-sm leading-relaxed text-ink">
               {current.goal}
@@ -614,7 +614,7 @@ export default function PracticeRoom({
           {isDone && (
             <div className="border-t border-sage-200 bg-white px-4 py-4 sm:px-6">
               <div className="mx-auto flex max-w-2xl flex-col gap-4 rounded-2xl border border-sage-200 bg-sage-100/60 p-4 sm:flex-row sm:items-center">
-                <span className="grid h-11 w-11 shrink-0 place-items-center rounded-full bg-leaf-500 text-white">
+                <span className="grid h-11 w-11 shrink-0 place-items-center rounded-full bg-leaf-500 text-forest-800">
                   <CheckCircle2 className="h-6 w-6" />
                 </span>
                 <div className="min-w-0 flex-1">
@@ -631,7 +631,7 @@ export default function PracticeRoom({
                   {sessionId && (
                     <Link
                       href={`/feedback/${sessionId}`}
-                      className="inline-flex flex-1 items-center justify-center gap-1.5 rounded-full bg-leaf-500 px-4 py-2 text-xs font-bold text-white transition-colors hover:bg-leaf-600 sm:flex-none"
+                      className="inline-flex flex-1 items-center justify-center gap-1.5 rounded-full bg-leaf-500 px-4 py-2 text-xs font-bold text-forest-800 transition-colors hover:bg-leaf-600 sm:flex-none"
                     >
                       Lihat Evaluasi
                     </Link>
@@ -670,7 +670,7 @@ export default function PracticeRoom({
                   aria-label={listening ? "Berhenti mendengarkan" : "Bicara lewat mikrofon"}
                   className={`grid h-11 w-11 shrink-0 place-items-center rounded-full transition-all disabled:opacity-50 ${
                     listening
-                      ? "animate-pulse bg-leaf-600 text-white shadow-lift"
+                      ? "animate-pulse bg-leaf-600 text-forest-800 shadow-lift"
                       : "border border-sage-200 bg-page text-leaf-600 hover:border-leaf-400"
                   }`}
                 >
@@ -698,7 +698,7 @@ export default function PracticeRoom({
                   aria-label="Kirim jawaban"
                   className={`grid h-11 w-11 shrink-0 place-items-center rounded-full transition-all ${
                     canSend
-                      ? "bg-leaf-500 text-white shadow-lift hover:bg-leaf-600"
+                      ? "bg-leaf-500 text-forest-800 shadow-lift hover:bg-leaf-600"
                       : "bg-sage-100 text-ink-faint"
                   }`}
                 >

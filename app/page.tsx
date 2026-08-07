@@ -1,21 +1,21 @@
 import Navbar from "@/components/navbar";
 import Hero from "@/components/hero";
-import RecommendationBanner from "@/components/recommendation-banner";
+import Makna from "@/components/makna";
 import Benefits from "@/components/benefits";
-import CourseSection from "@/components/course-section";
+import HowItWorks from "@/components/how-it-works";
+import ClosingCta from "@/components/closing-cta";
 import Footer from "@/components/footer";
-import OnboardingDialog from "@/components/onboarding-dialog";
 
 export default function Home() {
   return (
     <main>
       <Navbar />
       <Hero />
-      <RecommendationBanner />
+      <Makna />
       <Benefits />
-      <CourseSection />
+      <HowItWorks />
+      <ClosingCta />
       <Footer />
-      <OnboardingDialog />
     </main>
   );
 }

@@ -70,7 +70,7 @@ export default function CourseCard({
           <Link
             href={`/skenario/${course.id}`}
             aria-label={`Mulai latihan ${course.title}`}
-            className="inline-flex items-center gap-1 rounded-full bg-leaf-500 px-4 py-2 text-xs font-bold text-white transition-all group-hover:gap-1.5 hover:bg-leaf-600"
+            className="inline-flex items-center gap-1 rounded-full bg-leaf-500 px-4 py-2 text-xs font-bold text-forest-800 transition-all group-hover:gap-1.5 hover:bg-leaf-600"
           >
             {effective >= 1 ? (
               <>

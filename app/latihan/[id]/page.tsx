@@ -1,4 +1,5 @@
 import { notFound } from "next/navigation";
+import RequireAuth from "@/components/require-auth";
 import { categoryLabel, getCourse } from "@/lib/courses";
 import { getScenarioLevels, type LevelNumber } from "@/lib/scenarios";
 import PracticeRoom from "@/components/practice-room";
@@ -22,12 +23,14 @@ export default async function PracticePage({
   const current = levels.find((l) => l.level === level) ?? levels[0];
 
   return (
-    <PracticeRoom
-      courseId={course.id}
-      courseTitle={course.title}
-      level={current.level}
-      levels={levels}
-      category={categoryLabel(course.category)}
-    />
+    <RequireAuth>
+      <PracticeRoom
+        courseId={course.id}
+        courseTitle={course.title}
+        level={current.level}
+        levels={levels}
+        category={categoryLabel(course.category)}
+      />
+    </RequireAuth>
   );
 }

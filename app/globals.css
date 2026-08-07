@@ -16,11 +16,13 @@
   --color-sage-300: #a7c4b0;
   --color-sage-400: #7fa993;
 
-  /* Leaf greens (primary actions) */
-  --color-leaf-400: #5b9b74;
-  --color-leaf-500: #3e7c59;
-  --color-leaf-600: #356b4e;
-  --color-leaf-700: #2a573f;
+  /* Leaf greens (primary) — hijau terang #58C200 */
+  --color-leaf-300: #b8e94f;
+  --color-leaf-400: #7bd91f;
+  --color-leaf-500: #58c200;
+  --color-leaf-600: #4ca000;
+  --color-leaf-700: #3b8a00;
+  --color-leaf-800: #2f6d00;
 
   /* Deep forest */
   --color-forest-600: #295b42;

@@ -21,7 +21,7 @@ export default function RecommendationBanner() {
   return (
     <section className="mx-auto max-w-6xl px-6">
       <div className="flex flex-wrap items-center gap-4 rounded-3xl border border-sage-200 bg-gradient-to-br from-sage-100 via-white to-mist-50 p-6 shadow-soft">
-        <span className="grid h-12 w-12 shrink-0 place-items-center rounded-2xl bg-leaf-500 text-white shadow-lift">
+        <span className="grid h-12 w-12 shrink-0 place-items-center rounded-2xl bg-leaf-500 text-forest-800 shadow-lift">
           <Sparkles className="h-6 w-6" />
         </span>
         <div className="min-w-0 flex-1">
@@ -40,7 +40,7 @@ export default function RecommendationBanner() {
         </div>
         <Link
           href={`/skenario/${rec.courseId}`}
-          className="inline-flex shrink-0 items-center gap-1.5 rounded-full bg-leaf-500 px-6 py-3 text-sm font-bold text-white shadow-lift transition-all hover:-translate-y-0.5 hover:bg-leaf-600"
+          className="inline-flex shrink-0 items-center gap-1.5 rounded-full bg-leaf-500 px-6 py-3 text-sm font-bold text-forest-800 shadow-lift transition-all hover:-translate-y-0.5 hover:bg-leaf-600"
         >
           Mulai
           <ArrowUpRight className="h-4 w-4" />

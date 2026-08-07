@@ -38,10 +38,10 @@ export default function CourseSection() {
   }, [activeCategory, query]);
 
   return (
-    <section id="latihan" className="mx-auto max-w-6xl px-6 py-20">
+    <section className="mx-auto max-w-6xl px-1 py-2 sm:px-1">
       {/* Section header */}
       <div className="max-w-2xl">
-        <span className="text-sm font-bold uppercase tracking-widest text-leaf-500">
+        <span className="text-sm font-bold uppercase tracking-widest text-leaf-700">
           Katalog Latihan
         </span>
         <h2 className="mt-3 text-3xl font-bold tracking-tight text-forest-800 sm:text-4xl">
@@ -84,7 +84,7 @@ export default function CourseSection() {
                 onClick={() => setActiveCategory(category.id)}
                 className={`shrink-0 rounded-full px-4 py-2 text-sm font-semibold transition-all ${
                   active
-                    ? "bg-leaf-500 text-white shadow-soft"
+                    ? "bg-leaf-500 text-forest-800 shadow-soft"
                     : "border border-sage-200 bg-white text-ink-soft hover:border-leaf-400 hover:text-leaf-700"
                 }`}
               >
@@ -112,7 +112,7 @@ export default function CourseSection() {
           </div>
         ) : (
           <div className="mt-4 rounded-3xl border border-dashed border-sage-300 bg-white px-6 py-16 text-center">
-            <span className="mx-auto grid h-14 w-14 place-items-center rounded-2xl bg-sage-100 text-leaf-500">
+            <span className="mx-auto grid h-14 w-14 place-items-center rounded-2xl bg-sage-100 text-leaf-700">
               <BookOpen className="h-7 w-7" />
             </span>
             <h3 className="mt-4 text-lg font-bold text-forest-700">

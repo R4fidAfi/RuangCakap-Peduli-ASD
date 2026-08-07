@@ -6,28 +6,14 @@ import {
   TrendingUp,
 } from "lucide-react";
 
-function AiBubble({
-  text,
-  typing = false,
-}: {
-  text?: string;
-  typing?: boolean;
-}) {
+function AiBubble({ text }: { text: string }) {
   return (
     <div className="flex items-end gap-2.5">
       <span className="grid h-8 w-8 shrink-0 place-items-center rounded-full bg-mist-100 text-mist-600">
         <Bot className="h-4 w-4" />
       </span>
       <div className="max-w-[85%] rounded-2xl rounded-bl-md border border-mist-200 bg-mist-50 px-4 py-3 text-sm leading-relaxed text-ink">
-        {typing ? (
-          <span className="flex items-center gap-1 py-1" aria-label="AI sedang mengetik">
-            <span className="h-2 w-2 animate-bounce rounded-full bg-mist-400 [animation-delay:0ms]" />
-            <span className="h-2 w-2 animate-bounce rounded-full bg-mist-400 [animation-delay:120ms]" />
-            <span className="h-2 w-2 animate-bounce rounded-full bg-mist-400 [animation-delay:240ms]" />
-          </span>
-        ) : (
-          text
-        )}
+        {text}
       </div>
     </div>
   );
@@ -46,7 +32,7 @@ function UserBubble({ text }: { text: string }) {
 export default function Hero() {
   return (
     <section className="relative overflow-hidden">
-      {/* Soft ambient tints — calm, not gradient-mesh slop */}
+      {/* Soft ambient tints */}
       <div
         aria-hidden
         className="absolute -left-28 -top-28 h-96 w-96 rounded-full bg-sage-100/70 blur-3xl"
@@ -56,19 +42,14 @@ export default function Hero() {
         className="absolute -right-32 top-32 h-[28rem] w-[28rem] rounded-full bg-mist-50/80 blur-3xl"
       />
 
-      <div className="relative mx-auto grid max-w-6xl items-center gap-12 px-5 pb-16 pt-10 sm:px-6 lg:grid-cols-2 lg:pb-20 lg:pt-24">
+      <div className="relative mx-auto grid max-w-6xl items-center gap-12 px-5 pb-16 pt-14 sm:px-6 lg:grid-cols-2 lg:pb-24 lg:pt-28">
         {/* Left: copy */}
         <div>
-          <span className="inline-flex items-center gap-2 rounded-full border border-sage-200 bg-white px-4 py-1.5 text-xs font-semibold text-leaf-700 shadow-soft">
-            <span className="h-2 w-2 rounded-full bg-leaf-500" />
-            Ruang latihan yang aman untuk remaja & dewasa
-          </span>
-
-          <h1 className="mt-6 text-4xl font-bold leading-[1.15] tracking-tight text-forest-800 sm:text-5xl">
+          <h1 className="text-4xl font-bold leading-[1.12] tracking-tight text-forest-800 sm:text-5xl">
             Berlatih percakapan,
             <br />
             tumbuhkan rasa{" "}
-            <span className="relative whitespace-nowrap text-leaf-500">
+            <span className="relative whitespace-nowrap text-leaf-700">
               percaya diri
               <svg
                 aria-hidden
@@ -88,29 +69,31 @@ export default function Hero() {
           </h1>
 
           <p className="mt-5 max-w-xl text-base leading-relaxed text-ink-soft sm:text-lg">
-            Hadapi situasi sosial sehari-hari — memesan makanan, bertanya arah,
-            bicara dengan dokter — lewat simulasi percakapan bersama AI. Tenang,
-            bertahap, dan bisa diulang kapan saja.
+            RuangCakap adalah ruang latihan komunikasi sosial berbasis AI untuk
+            remaja dan dewasa penyandang autisme (ASD). Hadapi situasi
+            sehari-hari — memesan makanan, bertanya arah, bicara dengan dokter —
+            lewat percakapan bersama maskot AI, dalam suasana yang tenang,
+            bertahap, dan bebas dari rasa dihakimi.
           </p>
 
           <div className="mt-7 flex flex-wrap items-center gap-3">
             <a
-              href="#latihan"
-              className="rounded-full bg-leaf-500 px-6 py-3 text-sm font-semibold text-white shadow-lift transition-all hover:-translate-y-0.5 hover:bg-leaf-600 sm:px-7 sm:py-3.5"
+              href="/login"
+              className="rounded-full bg-leaf-500 px-6 py-3 text-sm font-semibold text-forest-800 shadow-lift transition-all hover:-translate-y-0.5 hover:bg-leaf-600 sm:px-7 sm:py-3.5"
             >
-              Mulai Latihan
+              Mulai Berlatih
             </a>
             <a
               href="#keunggulan"
               className="rounded-full border border-sage-300 bg-white px-6 py-3 text-sm font-semibold text-leaf-700 transition-all hover:-translate-y-0.5 hover:border-leaf-400 hover:bg-sage-100 sm:px-7 sm:py-3.5"
             >
-              Cara kerjanya
+              Kenapa RuangCakap
             </a>
           </div>
 
           <ul className="mt-9 flex flex-wrap gap-x-8 gap-y-2.5 text-sm font-medium text-ink-soft">
             <li className="flex items-center gap-2">
-              <ShieldCheck className="h-4.5 w-4.5 text-leaf-500" />
+              <ShieldCheck className="h-4.5 w-4.5 text-leaf-700" />
               Aman & suportif
             </li>
             <li className="flex items-center gap-2">
@@ -124,7 +107,7 @@ export default function Hero() {
           </ul>
         </div>
 
-        {/* Right: conversation mockup illustration */}
+        {/* Right: conversation mockup */}
         <div className="relative mx-auto w-full max-w-md lg:max-w-none">
           <div
             aria-hidden
@@ -157,13 +140,12 @@ export default function Hero() {
             <div className="mt-5 space-y-4">
               <AiBubble text="Halo, selamat datang! Ada yang bisa saya bantu hari ini?" />
               <UserBubble text="Saya mau pesan nasi goreng satu, pak." />
-              <AiBubble typing />
             </div>
 
             {/* Mock mic control */}
             <div className="mt-6 flex flex-wrap items-center gap-x-3 gap-y-2 rounded-2xl border border-sage-200 bg-page px-4 py-3">
               <span className="flex items-center gap-2 text-sm font-medium text-ink-soft">
-                <span className="grid h-9 w-9 place-items-center rounded-full bg-leaf-500 text-white shadow-soft">
+                <span className="grid h-9 w-9 place-items-center rounded-full bg-leaf-500 text-forest-800 shadow-soft">
                   <Mic className="h-4 w-4" />
                 </span>
                 Tekan untuk berbicara
