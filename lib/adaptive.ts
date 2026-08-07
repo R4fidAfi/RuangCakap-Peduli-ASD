@@ -72,8 +72,7 @@ export function recommendNext(sessions: StoredSession[]): Recommendation | null 
       courseTitle: first.title,
       level: 1,
       levelLabel: "Tenang",
-      reason:
-        "Belum ada latihan tercatat. Mulai dari situasi yang paling dekat dengan keseharian: memesan makanan.",
+      reason: "Mulai dari latihan pertamamu — memesan makanan.",
       kind: "start",
     };
   }
@@ -88,7 +87,7 @@ export function recommendNext(sessions: StoredSession[]): Recommendation | null 
       courseTitle: latest.courseTitle,
       level: latest.level,
       levelLabel: levelLabel(latest.level),
-      reason: `Skor latihan terakhir ${latestScore}. Tidak apa-apa — ulangi sekali lagi untuk menguatkan, pelan-pelan pasti naik.`,
+      reason: `Skor ${latestScore} — ulangi sekali lagi untuk menguatkan. Pelan-pelan pasti naik.`,
       kind: "repeat",
     };
   }
@@ -100,7 +99,7 @@ export function recommendNext(sessions: StoredSession[]): Recommendation | null 
       courseTitle: latest.courseTitle,
       level: latest.level + 1,
       levelLabel: levelLabel(latest.level + 1),
-      reason: `Latihan terakhir bagus (skor ${latestScore}). Saatnya mencoba Level ${latest.level + 1} (${levelLabel(latest.level + 1)}) dari skenario yang sama.`,
+      reason: `Bagus (skor ${latestScore})! Coba Level ${latest.level + 1} (${levelLabel(latest.level + 1)}) dari skenario yang sama.`,
       kind: "next-level",
     };
   }
@@ -120,7 +119,7 @@ export function recommendNext(sessions: StoredSession[]): Recommendation | null 
           courseTitle: course.title,
           level: 1,
           levelLabel: "Tenang",
-          reason: `Aspek terlemahmu saat ini: ${weakest.label}. Skenario ini paling cocok untuk melatihnya.`,
+          reason: `Aspek terlemah: ${weakest.label}. Skenario ini paling cocok melatihnya.`,
           kind: "related",
         };
       }
@@ -136,7 +135,7 @@ export function recommendNext(sessions: StoredSession[]): Recommendation | null 
         courseTitle: course.title,
         level: 1,
         levelLabel: "Tenang",
-        reason: `Latih ${weakest.label} lebih sering — coba ${course.title} lagi dengan tenang.`,
+        reason: `Latih ${weakest.label} lebih sering — coba ${course.title} lagi.`,
         kind: "related",
       };
     }
@@ -154,7 +153,7 @@ export function recommendNext(sessions: StoredSession[]): Recommendation | null 
       courseTitle: untouched.title,
       level: 1,
       levelLabel: "Tenang",
-      reason: "Jelajahi skenario baru untuk memperluas pengalaman latihanmu.",
+      reason: "Coba skenario baru untuk memperluas pengalamanmu.",
       kind: "fallback",
     };
   }
@@ -166,7 +165,7 @@ export function recommendNext(sessions: StoredSession[]): Recommendation | null 
       courseTitle: course.title,
       level: 1,
       levelLabel: "Tenang",
-      reason: "Skenario ini paling jarang kamu latih — coba sekali lagi ya.",
+      reason: "Skenario ini paling jarang kamu latih — coba lagi ya.",
       kind: "fallback",
     };
   }

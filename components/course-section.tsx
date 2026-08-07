@@ -47,10 +47,9 @@ export default function CourseSection() {
         <h2 className="mt-3 text-3xl font-bold tracking-tight text-forest-800 sm:text-4xl">
           Pilih Latihanmu
         </h2>
-        <p className="mt-3 text-base leading-relaxed text-ink-soft">
-          Pilih skenario yang paling dekat dengan situasi yang mau lu hadapi.
-          Setiap latihan punya 3 tingkat kesulitan, jadi bisa dimulai dari yang
-          paling tenang.
+        <p className="mt-2 max-w-xl text-sm leading-relaxed text-ink-soft">
+          Pilih situasi yang mau kamu latih — setiap skenario punya 3 tingkat
+          kesulitan.
         </p>
       </div>
 
@@ -101,7 +100,7 @@ export default function CourseSection() {
           Menampilkan {filtered.length} latihan
         </p>
         {filtered.length > 0 ? (
-          <div className="mt-4 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+          <div className="mt-4 space-y-3">
             {filtered.map((course) => (
               <CourseCard
                 key={course.id}

@@ -46,9 +46,9 @@ export default function Benefits() {
         ].map((item) => (
           <article
             key={item.title}
-            className="rounded-3xl border border-sage-200 bg-white p-7 shadow-soft transition-all hover:-translate-y-1 hover:shadow-lift"
+            className="group rounded-3xl border border-sage-200 bg-white p-7 shadow-soft transition-all hover:-translate-y-1 hover:border-leaf-300 hover:shadow-lift"
           >
-            <span className="grid h-12 w-12 place-items-center rounded-2xl bg-sage-100 text-leaf-600">
+            <span className="grid h-12 w-12 place-items-center rounded-2xl bg-gradient-to-br from-leaf-400 to-leaf-500 text-forest-800 shadow-soft transition-transform duration-300 group-hover:scale-110">
               <item.icon className="h-6 w-6" />
             </span>
             <h3 className="mt-5 text-lg font-bold text-forest-700">

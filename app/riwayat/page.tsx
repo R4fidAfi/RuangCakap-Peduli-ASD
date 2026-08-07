@@ -12,6 +12,7 @@ import {
 } from "lucide-react";
 import RequireAuth from "@/components/require-auth";
 import AppShell from "@/components/app-shell";
+import Mascot from "@/components/mascot";
 import { getSessions, type StoredSession } from "@/lib/storage";
 import { sessionAverage } from "@/lib/stats";
 import {
@@ -105,9 +106,7 @@ function RiwayatContent() {
 
       {sessions.length === 0 ? (
         <div className="mt-10 rounded-3xl border border-dashed border-sage-300 bg-white px-6 py-16 text-center">
-          <span className="mx-auto grid h-14 w-14 place-items-center rounded-2xl bg-sage-100 text-leaf-700">
-            <BookOpenText className="h-7 w-7" />
-          </span>
+          <Mascot mood="happy" className="mx-auto h-16 w-16 drop-shadow-md" />
           <h2 className="mt-4 text-lg font-bold text-forest-700">
             Belum ada latihan
           </h2>

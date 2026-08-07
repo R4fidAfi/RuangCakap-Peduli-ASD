@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { ArrowLeft, Clock, Layers, Mic, MessageCircle } from "lucide-react";
+import { ArrowLeft, Clock, Layers } from "lucide-react";
 import RequireAuth from "@/components/require-auth";
 import { categoryLabel, getCourse } from "@/lib/courses";
 import { getScenarioLevels } from "@/lib/scenarios";
@@ -77,48 +77,10 @@ export default async function ScenarioPage({
       <p className="mt-6 max-w-3xl text-base leading-relaxed text-ink-soft">
         {course.description} Dalam latihan ini, AI berperan sebagai{" "}
         <span className="font-semibold text-ink">{levels[0].aiRole}</span>.
-        Kamu berlatih dari situasi paling tenang sampai situasi yang lebih
-        kompleks, sesuai tingkat yang dipilih.
       </p>
 
-      {/* How it works */}
-      <div className="mt-10 grid gap-4 sm:grid-cols-3">
-        {[
-          {
-            icon: Layers,
-            title: "1. Pilih level",
-            text: "Mulai dari Tenang, lalu naik bertahap ke Standar dan Menantang.",
-          },
-          {
-            icon: Mic,
-            title: "2. Bicara atau ketik",
-            text: "Jawab AI lewat mikrofon atau ketik. Keduanya sama-sama valid.",
-          },
-          {
-            icon: MessageCircle,
-            title: "3. Terima feedback",
-            text: "Dapatkan apresiasi, saran, dan contoh kalimat yang suportif.",
-          },
-        ].map((step) => (
-          <div
-            key={step.title}
-            className="rounded-3xl border border-sage-200 bg-white p-5 shadow-soft"
-          >
-            <span className="grid h-10 w-10 place-items-center rounded-xl bg-sage-100 text-leaf-600">
-              <step.icon className="h-5 w-5" />
-            </span>
-            <h3 className="mt-3 text-sm font-bold text-forest-700">
-              {step.title}
-            </h3>
-            <p className="mt-1 text-sm leading-relaxed text-ink-soft">
-              {step.text}
-            </p>
-          </div>
-        ))}
-      </div>
-
       {/* Level picker */}
-      <div className="mt-14">
+      <div className="mt-10">
         <LevelPicker
           courseId={course.id}
           courseTitle={course.title}

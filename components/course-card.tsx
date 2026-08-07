@@ -18,79 +18,63 @@ export default function CourseCard({
   const effective = Math.max(course.completed ? 1 : 0, completedLevels);
 
   return (
-    <article className="group overflow-hidden rounded-3xl border border-sage-200 bg-white shadow-soft transition-all duration-300 hover:-translate-y-1.5 hover:shadow-lift">
-      {/* Cover — the Canva-like colorful thumbnail */}
-      <div className={`relative h-40 overflow-hidden ${theme.cover}`}>
-        <div
-          aria-hidden
-          className={`absolute inset-0 ${theme.pattern} opacity-70`}
-        />
-        {course.tag && (
-          <span className="absolute left-4 top-4 rounded-full bg-white/85 px-3 py-1 text-xs font-bold text-leaf-700 shadow-soft backdrop-blur-sm">
-            {course.tag}
-          </span>
-        )}
-        <div className="absolute right-4 top-4 grid h-11 w-11 place-items-center rounded-2xl bg-white/80 text-leaf-600 shadow-soft backdrop-blur-sm transition-transform duration-300 group-hover:scale-110">
-          <Icon className="h-5.5 w-5.5" />
-        </div>
-        <h3
-          className={`absolute bottom-4 left-4 right-4 text-lg font-bold leading-snug tracking-tight sm:text-xl ${theme.text}`}
-        >
+    <Link
+      href={`/skenario/${course.id}`}
+      className="group flex items-center gap-3.5 rounded-2xl border border-sage-200 bg-white p-3.5 shadow-soft transition-all hover:-translate-y-0.5 hover:border-leaf-400 hover:shadow-lift"
+    >
+      {/* Tile ikon ala list (bukan cover besar) */}
+      <span
+        className={`grid h-12 w-12 shrink-0 place-items-center rounded-2xl ${theme.cover}`}
+      >
+        <Icon className={`h-5.5 w-5.5 ${theme.text}`} />
+      </span>
+
+      {/* Info */}
+      <div className="min-w-0 flex-1">
+        <h3 className="truncate text-sm font-bold text-forest-700">
           {course.title}
         </h3>
-      </div>
-
-      {/* Body */}
-      <div className="p-4 sm:p-5">
-        <p className="line-clamp-2 text-sm leading-relaxed text-ink-soft">
-          {course.description}
-        </p>
-
-        <div className="mt-4 flex flex-wrap items-center justify-between gap-2">
-          <div className="flex min-w-0 flex-wrap items-center gap-3">
-            <span className="rounded-full bg-sage-100 px-3 py-1 text-xs font-semibold text-leaf-700">
-              {categoryLabel(course.category)}
-            </span>
-            <span
-              className="flex items-center gap-1"
-              title="3 tingkat kesulitan"
-              aria-label="3 tingkat kesulitan"
-            >
-              {[0, 1, 2].map((i) => (
-                <span
-                  key={i}
-                  className={`h-2 w-2 rounded-full ${
-                    i < effective ? "bg-leaf-500" : "bg-sage-300"
-                  }`}
-                />
-              ))}
-            </span>
-          </div>
-
-          <Link
-            href={`/skenario/${course.id}`}
-            aria-label={`Mulai latihan ${course.title}`}
-            className="inline-flex items-center gap-1 rounded-full bg-leaf-500 px-4 py-2 text-xs font-bold text-forest-800 transition-all group-hover:gap-1.5 hover:bg-leaf-600"
+        <div className="mt-1 flex flex-wrap items-center gap-2">
+          <span className="rounded-full bg-sage-100 px-2 py-0.5 text-[10px] font-semibold text-leaf-700">
+            {categoryLabel(course.category)}
+          </span>
+          <span
+            className="flex items-center gap-1"
+            title="3 tingkat kesulitan"
+            aria-label="3 tingkat kesulitan"
           >
-            {effective >= 1 ? (
-              <>
-                Lanjut <ArrowUpRight className="h-3.5 w-3.5" />
-              </>
-            ) : (
-              <>
-                Mulai <ArrowUpRight className="h-3.5 w-3.5" />
-              </>
-            )}
-          </Link>
+            {[0, 1, 2].map((i) => (
+              <span
+                key={i}
+                className={`h-1.5 w-1.5 rounded-full ${
+                  i < effective ? "bg-leaf-500" : "bg-sage-300"
+                }`}
+              />
+            ))}
+          </span>
+          {course.tag && (
+            <span className="rounded-full bg-white px-2 py-0.5 text-[10px] font-semibold text-leaf-700 ring-1 ring-sage-200">
+              {course.tag}
+            </span>
+          )}
         </div>
-
         {effective >= 1 && (
-          <p className="mt-3 flex items-center gap-1.5 text-xs font-semibold text-leaf-600">
-            <Check className="h-3.5 w-3.5" /> Level {effective} selesai —
-            lanjut Level {Math.min(3, effective + 1)}
+          <p className="mt-1 flex items-center gap-1 text-[10px] font-semibold text-leaf-700">
+            <Check className="h-3 w-3" /> Level {effective} selesai
           </p>
         )}
       </div>
-    </article>
+
+      {/* Aksi */}
+      <span
+        className={`grid h-9 w-9 shrink-0 place-items-center rounded-full transition-colors ${
+          effective >= 1
+            ? "bg-leaf-500 text-forest-800"
+            : "bg-sage-100 text-leaf-700 group-hover:bg-leaf-500 group-hover:text-forest-800"
+        }`}
+      >
+        <ArrowUpRight className="h-4 w-4" />
+      </span>
+    </Link>
   );
 }

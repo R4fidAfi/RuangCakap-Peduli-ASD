@@ -33,12 +33,12 @@ export default function HowItWorks() {
         {steps.map((step, index) => (
           <div
             key={step.title}
-            className="relative rounded-3xl border border-sage-200 bg-white p-7 shadow-soft"
+            className="relative rounded-3xl border border-sage-200 bg-white p-7 shadow-soft transition-all hover:-translate-y-1 hover:border-leaf-300 hover:shadow-lift"
           >
-            <span className="absolute right-6 top-6 text-4xl font-bold text-sage-200">
+            <span className="absolute right-6 top-6 grid h-9 w-9 place-items-center rounded-full bg-leaf-500 text-sm font-bold text-forest-800 shadow-soft">
               {index + 1}
             </span>
-            <span className="grid h-12 w-12 place-items-center rounded-2xl bg-sage-100 text-leaf-600">
+            <span className="grid h-12 w-12 place-items-center rounded-2xl bg-gradient-to-br from-leaf-400 to-leaf-500 text-forest-800 shadow-soft">
               <step.icon className="h-6 w-6" />
             </span>
             <h3 className="mt-5 text-lg font-bold text-forest-700">

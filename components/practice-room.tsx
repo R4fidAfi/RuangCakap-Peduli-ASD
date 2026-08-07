@@ -6,7 +6,6 @@ import {
   ArrowLeft,
   ArrowUp,
   Bot,
-  CheckCircle2,
   Flag,
   ListChecks,
   Mic,
@@ -20,6 +19,7 @@ import {
 import { LEVEL_META, type LevelNumber, type ScenarioLevel } from "@/lib/scenarios";
 import { saveSession, type StoredTurn } from "@/lib/storage";
 import type { ChatTurn } from "@/lib/ai/types";
+import Mascot from "./mascot";
 import {
   createRecognition,
   speak,
@@ -55,9 +55,10 @@ function AiBubble({
 }) {
   return (
     <div className="group flex items-end gap-2.5">
-      <span className="grid h-8 w-8 shrink-0 place-items-center rounded-full bg-mist-100 text-mist-600">
-        <Bot className="h-4 w-4" />
-      </span>
+      <Mascot
+        mood={typing ? "thinking" : speaking ? "listening" : "default"}
+        className="h-8 w-8 shrink-0"
+      />
       <div className="max-w-[85%] rounded-2xl rounded-bl-md border border-mist-200 bg-mist-50 px-4 py-3 text-sm leading-relaxed text-ink">
         {typing ? (
           <span className="flex items-center gap-1 py-1" aria-label="AI sedang mengetik">
@@ -614,9 +615,7 @@ export default function PracticeRoom({
           {isDone && (
             <div className="border-t border-sage-200 bg-white px-4 py-4 sm:px-6">
               <div className="mx-auto flex max-w-2xl flex-col gap-4 rounded-2xl border border-sage-200 bg-sage-100/60 p-4 sm:flex-row sm:items-center">
-                <span className="grid h-11 w-11 shrink-0 place-items-center rounded-full bg-leaf-500 text-forest-800">
-                  <CheckCircle2 className="h-6 w-6" />
-                </span>
+                <Mascot mood="happy" className="h-12 w-12 shrink-0 drop-shadow-md" />
                 <div className="min-w-0 flex-1">
                   <p className="text-sm font-bold text-forest-700">
                     Latihan selesai — hebat sudah mencoba!

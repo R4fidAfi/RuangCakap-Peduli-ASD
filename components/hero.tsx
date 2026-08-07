@@ -1,17 +1,16 @@
 import {
-  Bot,
   Mic,
+  MoonStar,
   Repeat,
   ShieldCheck,
   TrendingUp,
 } from "lucide-react";
+import Mascot from "./mascot";
 
 function AiBubble({ text }: { text: string }) {
   return (
     <div className="flex items-end gap-2.5">
-      <span className="grid h-8 w-8 shrink-0 place-items-center rounded-full bg-mist-100 text-mist-600">
-        <Bot className="h-4 w-4" />
-      </span>
+      <Mascot mood="default" className="h-8 w-8 shrink-0" />
       <div className="max-w-[85%] rounded-2xl rounded-bl-md border border-mist-200 bg-mist-50 px-4 py-3 text-sm leading-relaxed text-ink">
         {text}
       </div>
@@ -109,6 +108,15 @@ export default function Hero() {
 
         {/* Right: conversation mockup */}
         <div className="relative mx-auto w-full max-w-md lg:max-w-none">
+          {/* Badge mengambang */}
+          <div className="absolute -left-2 top-8 z-10 inline-flex -rotate-3 items-center gap-1.5 rounded-full border border-sage-200 bg-white px-3 py-1.5 text-[11px] font-bold text-leaf-700 shadow-lift sm:-left-4">
+            <MoonStar className="h-3.5 w-3.5" />
+            Mode Tenang aktif
+          </div>
+          <Mascot
+            mood="happy"
+            className="absolute -top-10 right-2 z-10 h-20 w-20 drop-shadow-md sm:-right-3 sm:h-24 sm:w-24"
+          />
           <div
             aria-hidden
             className="absolute -right-3 -top-5 h-20 w-20 rounded-3xl bg-sage-100 pattern-dots-green sm:-right-4 sm:-top-6 sm:h-24 sm:w-24"
@@ -118,7 +126,7 @@ export default function Hero() {
             <div className="flex items-center justify-between border-b border-sage-200 pb-4">
               <div className="flex items-center gap-3">
                 <span className="grid h-11 w-11 place-items-center rounded-2xl bg-mist-100 text-mist-600">
-                  <Bot className="h-5 w-5" />
+                  <Mascot mood="listening" className="h-9 w-9" />
                 </span>
                 <div>
                   <p className="text-sm font-bold text-forest-700">

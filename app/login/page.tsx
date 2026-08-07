@@ -12,6 +12,7 @@ import {
   type AvatarId,
 } from "@/lib/profile";
 import Avatar from "@/components/avatar";
+import Mascot from "@/components/mascot";
 
 export default function LoginPage() {
   const router = useRouter();
@@ -59,10 +60,11 @@ export default function LoginPage() {
       </div>
 
       <div className="mx-auto flex w-full max-w-md flex-1 flex-col justify-center px-4 pb-16 pt-4 sm:px-6">
-        <h1 className="text-2xl font-bold tracking-tight text-forest-800">
+        <Mascot mood="happy" className="mx-auto h-24 w-24 drop-shadow-md" />
+        <h1 className="mt-4 text-center text-2xl font-bold tracking-tight text-forest-800">
           Masuk ke akunmu
         </h1>
-        <p className="mt-1.5 text-sm leading-relaxed text-ink-soft">
+        <p className="mt-1.5 text-center text-sm leading-relaxed text-ink-soft">
           Buat akun lokal untuk mulai berlatih. Data tersimpan aman di browser
           kamu — tanpa perlu email atau kata sandi dari server.
         </p>

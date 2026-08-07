@@ -6,6 +6,7 @@ import { ArrowUpRight, BookOpenText, CalendarCheck, Flag } from "lucide-react";
 import RequireAuth from "@/components/require-auth";
 import AppShell from "@/components/app-shell";
 import RecommendationBanner from "@/components/recommendation-banner";
+import Mascot from "@/components/mascot";
 import { getProfile } from "@/lib/profile";
 import { getSessions } from "@/lib/storage";
 import { sessionAverage } from "@/lib/stats";
@@ -37,15 +38,20 @@ export default function BerandaPage() {
       <AppShell>
         <div className="flex flex-wrap items-end justify-between gap-3">
           <div>
-            <p className="text-xs font-bold uppercase tracking-widest text-leaf-700">
-              Beranda
-            </p>
-            <h1 className="mt-1 text-2xl font-bold tracking-tight text-forest-800 sm:text-3xl">
-              Hai, {profile?.name ?? "Teman"}!
-            </h1>
-            <p className="mt-1 text-sm text-ink-soft">
-              Satu latihan kecil hari ini sudah luar biasa.
-            </p>
+            <div className="flex items-center gap-3">
+              <Mascot mood="happy" className="h-12 w-12 shrink-0 drop-shadow-md" />
+              <div>
+                <p className="text-xs font-bold uppercase tracking-widest text-leaf-700">
+                  Beranda
+                </p>
+                <h1 className="mt-0.5 text-2xl font-bold tracking-tight text-forest-800 sm:text-3xl">
+                  Hai, {profile?.name ?? "Teman"}!
+                </h1>
+                <p className="mt-0.5 text-sm text-ink-soft">
+                  Satu latihan kecil hari ini sudah luar biasa.
+                </p>
+              </div>
+            </div>
           </div>
           {/* Target harian */}
           <div className="flex items-center gap-3 rounded-2xl border border-sage-200 bg-white px-4 py-3 shadow-soft">
