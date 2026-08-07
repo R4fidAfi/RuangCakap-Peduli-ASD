@@ -44,7 +44,10 @@ export default function Hero() {
       <div className="relative mx-auto grid max-w-6xl items-center gap-12 px-5 pb-16 pt-14 sm:px-6 lg:grid-cols-2 lg:pb-24 lg:pt-28">
         {/* Left: copy */}
         <div>
-          <h1 className="text-4xl font-bold leading-[1.12] tracking-tight text-forest-800 sm:text-5xl">
+          <h1
+            className="fade-up text-4xl font-bold leading-[1.12] tracking-tight text-forest-800 sm:text-5xl"
+            style={{ animationDelay: "0ms" }}
+          >
             Berlatih percakapan,
             <br />
             tumbuhkan rasa{" "}
@@ -67,7 +70,10 @@ export default function Hero() {
             .
           </h1>
 
-          <p className="mt-5 max-w-xl text-base leading-relaxed text-ink-soft sm:text-lg">
+          <p
+            className="fade-up mt-5 max-w-xl text-base leading-relaxed text-ink-soft sm:text-lg"
+            style={{ animationDelay: "120ms" }}
+          >
             RuangCakap adalah ruang latihan komunikasi sosial berbasis AI untuk
             remaja dan dewasa penyandang autisme (ASD). Hadapi situasi
             sehari-hari — memesan makanan, bertanya arah, bicara dengan dokter —
@@ -75,7 +81,10 @@ export default function Hero() {
             bertahap, dan bebas dari rasa dihakimi.
           </p>
 
-          <div className="mt-7 flex flex-wrap items-center gap-3">
+          <div
+            className="fade-up mt-7 flex flex-wrap items-center gap-3"
+            style={{ animationDelay: "240ms" }}
+          >
             <a
               href="/login"
               className="rounded-full bg-leaf-500 px-6 py-3 text-sm font-semibold text-forest-800 shadow-lift transition-all hover:-translate-y-0.5 hover:bg-leaf-600 sm:px-7 sm:py-3.5"
@@ -90,7 +99,10 @@ export default function Hero() {
             </a>
           </div>
 
-          <ul className="mt-9 flex flex-wrap gap-x-8 gap-y-2.5 text-sm font-medium text-ink-soft">
+          <ul
+            className="fade-up mt-9 flex flex-wrap gap-x-8 gap-y-2.5 text-sm font-medium text-ink-soft"
+            style={{ animationDelay: "360ms" }}
+          >
             <li className="flex items-center gap-2">
               <ShieldCheck className="h-4.5 w-4.5 text-leaf-700" />
               Aman & suportif
@@ -107,7 +119,16 @@ export default function Hero() {
         </div>
 
         {/* Right: conversation mockup */}
-        <div className="relative mx-auto w-full max-w-md lg:max-w-none">
+        <div
+          className="fade-up relative mx-auto w-full max-w-md lg:max-w-none"
+          style={{ animationDelay: "150ms" }}
+        >
+          {/* Maskot melambai dari balik mockup */}
+          <Mascot
+            motion="wave"
+            mood="happy"
+            className="absolute -top-9 -left-2 z-10 h-16 w-16 drop-shadow-md sm:-left-4"
+          />
           <div
             aria-hidden
             className="absolute -right-3 -top-5 h-20 w-20 rounded-3xl bg-sage-100 pattern-dots-green sm:-right-4 sm:-top-6 sm:h-24 sm:w-24"

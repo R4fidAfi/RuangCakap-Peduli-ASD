@@ -17,9 +17,9 @@ import { getSessions, type StoredSession } from "@/lib/storage";
 import { sessionAverage } from "@/lib/stats";
 import {
   exportAllJson,
-  exportAllMarkdown,
+  exportAllReport,
   exportSessionJson,
-  exportSessionMarkdown,
+  exportSessionReport,
 } from "@/lib/export";
 
 function formatDate(iso: string): string {
@@ -76,10 +76,10 @@ function RiwayatContent() {
               <FileJson className="h-4 w-4" /> Ekspor Semua (JSON)
             </button>
             <button
-              onClick={() => exportAllMarkdown(sessions)}
+              onClick={() => exportAllReport(sessions)}
               className="inline-flex items-center gap-2 rounded-full border border-sage-300 bg-white px-4 py-2.5 text-xs font-semibold text-leaf-700 transition-colors hover:bg-sage-100"
             >
-              <FileText className="h-4 w-4" /> Ekspor Semua (Markdown)
+              <FileText className="h-4 w-4" /> Ekspor Semua (Laporan)
             </button>
             {confirmClear ? (
               <button
@@ -171,9 +171,9 @@ function RiwayatContent() {
                       <Download className="h-3.5 w-3.5" />
                     </button>
                     <button
-                      onClick={() => exportSessionMarkdown(session)}
-                      title="Unduh transkrip Markdown"
-                      aria-label="Unduh transkrip Markdown"
+                      onClick={() => exportSessionReport(session)}
+                      title="Unduh laporan (HTML)"
+                      aria-label="Unduh laporan (HTML)"
                       className="grid h-8 w-8 place-items-center rounded-full border border-sage-300 bg-white text-leaf-700 transition-colors hover:bg-sage-100"
                     >
                       <FileText className="h-3.5 w-3.5" />

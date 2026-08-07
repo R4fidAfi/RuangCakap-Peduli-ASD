@@ -1,4 +1,5 @@
-import { MessageCircle, Sparkles, Target } from "lucide-react";
+import { MessageCircle, MoveRight, Sparkles, Target } from "lucide-react";
+import Reveal from "./reveal";
 
 const steps = [
   {
@@ -21,33 +22,53 @@ const steps = [
 export default function HowItWorks() {
   return (
     <section id="cara-kerja" className="mx-auto max-w-6xl px-5 py-20 sm:px-6">
-      <div className="max-w-2xl">
-        <p className="text-sm font-bold uppercase tracking-widest text-leaf-700">
-          Cara kerja
-        </p>
-        <h2 className="mt-3 text-3xl font-bold tracking-tight text-forest-800 sm:text-4xl">
-          Tiga langkah sederhana
-        </h2>
-      </div>
-      <div className="mt-10 grid gap-5 md:grid-cols-3">
-        {steps.map((step, index) => (
-          <div
-            key={step.title}
-            className="relative rounded-3xl border border-sage-200 bg-white p-7 shadow-soft transition-all hover:-translate-y-1 hover:border-leaf-300 hover:shadow-lift"
+      <Reveal>
+        <div className="max-w-2xl">
+          <p className="text-sm font-bold uppercase tracking-widest text-leaf-700">
+            Cara kerja
+          </p>
+          <h2 className="mt-3 text-3xl font-bold tracking-tight text-forest-800 sm:text-4xl">
+            Tiga langkah sederhana
+          </h2>
+        </div>
+      </Reveal>
+
+      <div className="relative mt-14">
+        <div className="grid gap-10 md:grid-cols-3 md:gap-6">
+          {steps.map((step, index) => (
+            <Reveal key={step.title} delay={index * 110}>
+              <div className="relative h-full rounded-3xl border border-sage-200 bg-white p-7 pt-8 shadow-soft transition-all hover:-translate-y-1 hover:border-leaf-300 hover:shadow-lift">
+                {/* Nomor langkah */}
+                <span className="absolute -top-5 left-6 grid h-10 w-10 place-items-center rounded-full bg-leaf-500 text-sm font-bold text-forest-800 shadow-lift">
+                  {index + 1}
+                </span>
+                <span className="mt-2 grid h-12 w-12 place-items-center rounded-2xl bg-gradient-to-br from-leaf-400 to-leaf-500 text-forest-800 shadow-soft">
+                  <step.icon className="h-6 w-6" />
+                </span>
+                <h3 className="mt-5 text-lg font-bold text-forest-700">
+                  {step.title}
+                </h3>
+                <p className="mt-2 text-sm leading-relaxed text-ink-soft">
+                  {step.text}
+                </p>
+              </div>
+            </Reveal>
+          ))}
+        </div>
+
+        {/* Penghubung antar langkah (desktop) */}
+        {[
+          { left: "left-1/3", delay: "0s" },
+          { left: "left-2/3", delay: "0.7s" },
+        ].map((arrow, i) => (
+          <span
+            key={i}
+            aria-hidden
+            className={`absolute top-[26px] z-10 hidden -translate-x-1/2 md:grid ${arrow.left} h-8 w-8 place-items-center rounded-full border border-sage-200 bg-white text-leaf-700 shadow-soft`}
+            style={{ animationDelay: arrow.delay }}
           >
-            <span className="absolute right-6 top-6 grid h-9 w-9 place-items-center rounded-full bg-leaf-500 text-sm font-bold text-forest-800 shadow-soft">
-              {index + 1}
-            </span>
-            <span className="grid h-12 w-12 place-items-center rounded-2xl bg-gradient-to-br from-leaf-400 to-leaf-500 text-forest-800 shadow-soft">
-              <step.icon className="h-6 w-6" />
-            </span>
-            <h3 className="mt-5 text-lg font-bold text-forest-700">
-              {step.title}
-            </h3>
-            <p className="mt-2 text-sm leading-relaxed text-ink-soft">
-              {step.text}
-            </p>
-          </div>
+            <MoveRight className="drift-soft h-4 w-4" />
+          </span>
         ))}
       </div>
     </section>

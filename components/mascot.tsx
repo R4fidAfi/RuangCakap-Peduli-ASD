@@ -9,29 +9,41 @@ export type MascotMood = "default" | "happy" | "thinking" | "listening";
  */
 export default function Mascot({
   mood = "default",
+  motion = "none",
   className = "h-24 w-24",
   ...rest
-}: { mood?: MascotMood; className?: string } & SVGProps<SVGSVGElement>) {
+}: {
+  mood?: MascotMood;
+  /** "idle" = goyang pelan; "wave" = melambai sekali lalu goyang pelan. */
+  motion?: "none" | "idle" | "wave";
+  className?: string;
+} & SVGProps<SVGSVGElement>) {
+  const motionClass =
+    motion === "wave"
+      ? "mascot-wave-idle"
+      : motion === "idle"
+        ? "mascot-idle"
+        : "";
+  const leafAnimate = motion !== "none";
   return (
     <svg
       viewBox="0 0 120 120"
-      className={className}
+      className={`${motionClass} ${className}`}
       role="img"
       aria-label="Maskot RuangCakap"
       {...rest}
     >
       {/* Daun di kepala */}
-      <path
-        d="M62 26c7-13 22-17 32-11-2 13-13 24-32 26z"
-        fill="#58c200"
-      />
-      <path
-        d="M62 26c9-4 18-5 27-3"
-        stroke="#2f6d00"
-        strokeWidth="2"
-        strokeLinecap="round"
-        fill="none"
-      />
+      <g className={leafAnimate ? "mascot-leaf" : undefined}>
+        <path d="M62 26c7-13 22-17 32-11-2 13-13 24-32 26z" fill="#58c200" />
+        <path
+          d="M62 26c9-4 18-5 27-3"
+          stroke="#2f6d00"
+          strokeWidth="2"
+          strokeLinecap="round"
+          fill="none"
+        />
+      </g>
       {/* Badan gelembung */}
       <path
         d="M60 32c-21 0-38 13-38 30 0 10 6 19 15 25l-3 10 12-7c4 1 9 2 14 2 21 0 38-13 38-30S81 32 60 32z"
