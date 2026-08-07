@@ -11,6 +11,7 @@ import {
   Footprints,
   MessageCircle,
   Repeat,
+  Sparkles,
   TrendingUp,
   Trophy,
 } from "lucide-react";
@@ -41,12 +42,28 @@ function ProgressContent() {
   if (stats.totalSessions === 0) {
     return (
       <main className="mx-auto max-w-5xl px-6 py-10">
-        <p className="text-xs font-bold uppercase tracking-widest text-leaf-700">
-          Progress
-        </p>
-        <h1 className="mt-1 text-3xl font-bold tracking-tight text-forest-800">
-          Perkembanganmu
-        </h1>
+        <div className="relative mx-auto max-w-2xl pt-4 text-center">
+          <Sparkles
+            aria-hidden
+            className="twinkle-soft absolute -left-2 top-6 h-5 w-5 text-sun-400 sm:-left-8"
+          />
+          <Sparkles
+            aria-hidden
+            className="twinkle-soft absolute -right-1 top-14 h-4 w-4 text-leaf-500 sm:-right-6"
+            style={{ animationDelay: "1.2s" }}
+          />
+          <Mascot
+            motion="idle"
+            mood="happy"
+            className="mx-auto h-16 w-16 drop-shadow-md"
+          />
+          <p className="mt-2 inline-block text-sm font-bold uppercase tracking-widest text-leaf-700">
+            Progress
+          </p>
+          <h1 className="mt-2 text-3xl font-bold tracking-tight text-forest-800 sm:text-4xl">
+            Perkembanganmu
+          </h1>
+        </div>
         <div className="mt-10 rounded-3xl border border-dashed border-sage-300 bg-white px-6 py-16 text-center">
           <Mascot mood="happy" className="mx-auto h-16 w-16 drop-shadow-md" />
           <h2 className="mt-4 text-lg font-bold text-forest-700">
@@ -69,12 +86,31 @@ function ProgressContent() {
 
   return (
     <main className="mx-auto max-w-5xl px-6 py-10">
-      <p className="text-xs font-bold uppercase tracking-widest text-leaf-700">
-        Progress
-      </p>
-      <h1 className="mt-1 text-3xl font-bold tracking-tight text-forest-800">
-        Perkembanganmu
-      </h1>
+      <div className="relative mx-auto max-w-2xl pt-4 text-center">
+        <Sparkles
+          aria-hidden
+          className="twinkle-soft absolute -left-2 top-6 h-5 w-5 text-sun-400 sm:-left-8"
+        />
+        <Sparkles
+          aria-hidden
+          className="twinkle-soft absolute -right-1 top-14 h-4 w-4 text-leaf-500 sm:-right-6"
+          style={{ animationDelay: "1.2s" }}
+        />
+        <Mascot
+          motion="idle"
+          mood="happy"
+          className="mx-auto h-16 w-16 drop-shadow-md"
+        />
+        <p className="mt-2 inline-block text-sm font-bold uppercase tracking-widest text-leaf-700">
+          Progress
+        </p>
+        <h1 className="mt-2 text-3xl font-bold tracking-tight text-forest-800 sm:text-4xl">
+          Perkembanganmu
+        </h1>
+        <p className="mx-auto mt-2 max-w-md text-sm leading-relaxed text-ink-soft">
+          Lihat seberapa jauh kamu melangkah — setiap latihan kecil itu berarti.
+        </p>
+      </div>
 
       {/* Rekomendasi adaptif */}
       <div className="mt-8">
@@ -250,18 +286,20 @@ function ProgressContent() {
         <div className="mt-4 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
           {stats.byCategory.map((category, index) => {
             const accents = [
-              "border-leaf-500",
-              "border-mist-400",
-              "border-teal-400",
-              "border-sun-400",
+              "bg-leaf-500",
+              "bg-mist-400",
+              "bg-teal-400",
+              "bg-sun-400",
             ];
             return (
               <div
                 key={category.id}
-                className={`rounded-2xl border border-sage-200 border-l-4 bg-white p-4 shadow-soft transition-all hover:-translate-y-0.5 hover:shadow-lift ${
-                  accents[index % accents.length]
-                }`}
+                className="relative overflow-hidden rounded-2xl border border-sage-200 bg-white p-4 pl-5 shadow-soft transition-all hover:-translate-y-0.5 hover:shadow-lift"
               >
+                <span
+                  aria-hidden
+                  className={`absolute inset-y-0 left-0 w-1.5 ${accents[index % accents.length]}`}
+                />
                 <p className="text-sm font-bold text-forest-700">
                   {category.label}
                 </p>
