@@ -140,14 +140,20 @@ function FeedbackContent() {
     }
     setSession(found);
     setLoaded(true);
-    if (found.feedback) {
+    // Feedback fallback (dari sesi selesai) tetap di-upgrade oleh AI.
+    if (found.feedback && found.feedback.source !== "fallback") {
       setState("ready");
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [sessionId]);
 
   useEffect(() => {
-    if (loaded && session && !session.feedback && state !== "loading") {
+    if (
+      loaded &&
+      session &&
+      (!session.feedback || session.feedback.source === "fallback") &&
+      state !== "loading"
+    ) {
       void generateFeedback();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps

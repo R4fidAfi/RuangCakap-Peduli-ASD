@@ -19,6 +19,7 @@ import {
 import { LEVEL_META, type LevelNumber, type ScenarioLevel } from "@/lib/scenarios";
 import { saveSession, type StoredTurn } from "@/lib/storage";
 import type { ChatTurn } from "@/lib/ai/types";
+import { buildFallbackFeedback } from "@/lib/ai/feedback";
 import Mascot from "./mascot";
 import {
   createRecognition,
@@ -260,6 +261,14 @@ export default function PracticeRoom({
       finishedAt: now,
       finished: true,
       turns: finalTurns as StoredTurn[],
+      // Evaluasi awal langsung dihitung di perangkat (deterministik) agar
+      // skor rata-rata langsung muncul di riwayat/progress. Halaman evaluasi
+      // akan menyempurnakannya dengan evaluasi AI bila penyedia AI tersedia.
+      feedback: buildFallbackFeedback({
+        courseId,
+        level: current.level,
+        turns: finalTurns,
+      }),
     };
     saveSession(session);
     setSessionId(id);
