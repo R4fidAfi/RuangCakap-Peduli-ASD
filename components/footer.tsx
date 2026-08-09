@@ -32,7 +32,7 @@ export default function Footer() {
         </div>
 
         <div className="mt-10 border-t border-sage-200 pt-6 text-center text-xs text-ink-faint">
-          © 2026 RuangCakap — Dibuat untuk perlombaan.
+          - © 2026 RuangCakap - .
         </div>
       </div>
     </footer>
