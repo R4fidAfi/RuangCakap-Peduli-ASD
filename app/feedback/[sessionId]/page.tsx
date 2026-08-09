@@ -18,7 +18,7 @@ import RequireAuth from "@/components/require-auth";
 import { getSession, saveSession, type StoredSession } from "@/lib/storage";
 import type { FeedbackResult } from "@/lib/ai/feedback";
 
-type FeedbackState = "loading" | "ready" | "error";
+type FeedbackState = "idle" | "loading" | "ready" | "error";
 
 function formatDate(iso: string): string {
   try {
@@ -90,44 +90,58 @@ function FeedbackContent() {
 
   const [session, setSession] = useState<StoredSession | null>(null);
   const [loaded, setLoaded] = useState(false);
-  const [state, setState] = useState<FeedbackState>("loading");
+  const [state, setState] = useState<FeedbackState>("idle");
   const [errorMsg, setErrorMsg] = useState("");
   const [copied, setCopied] = useState(false);
 
-  const generateFeedback = useCallback(async () => {
-    if (!session) return;
-    setState("loading");
-    setErrorMsg("");
-    try {
-      const res = await fetch("/api/feedback", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          courseId: session.courseId,
-          level: session.level,
-          turns: session.turns,
-        }),
-      });
-      if (!res.ok) {
-        let message = "Evaluasi gagal dibuat. Coba lagi.";
-        try {
-          const data = (await res.json()) as { message?: string };
-          if (data?.message) message = data.message;
-        } catch {
-          /* body bukan JSON */
+  const generateFeedback = useCallback(
+    async (options?: { background?: boolean }) => {
+      if (!session) return;
+      // Tampilkan layar "menyiapkan" hanya jika belum ada hasil sama sekali.
+      if (!session.feedback) setState("loading");
+      setErrorMsg("");
+      const controller = new AbortController();
+      const timer = setTimeout(() => controller.abort(), 25000);
+      try {
+        const res = await fetch("/api/feedback", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            courseId: session.courseId,
+            level: session.level,
+            turns: session.turns,
+          }),
+          signal: controller.signal,
+        });
+        clearTimeout(timer);
+        if (!res.ok) {
+          let message = "Evaluasi gagal dibuat. Coba lagi.";
+          try {
+            const data = (await res.json()) as { message?: string };
+            if (data?.message) message = data.message;
+          } catch {
+            /* body bukan JSON */
+          }
+          throw new Error(message);
         }
-        throw new Error(message);
+        const feedback = (await res.json()) as FeedbackResult;
+        const updated: StoredSession = { ...session, feedback };
+        saveSession(updated);
+        setSession(updated);
+        setState("ready");
+      } catch (err) {
+        clearTimeout(timer);
+        // Upgrade latar belakang gagal → tetap tampilkan evaluasi yang ada.
+        if (session.feedback) {
+          setState("ready");
+          return;
+        }
+        setErrorMsg(err instanceof Error ? err.message : "Evaluasi gagal dibuat.");
+        setState("error");
       }
-      const feedback = (await res.json()) as FeedbackResult;
-      const updated: StoredSession = { ...session, feedback };
-      saveSession(updated);
-      setSession(updated);
-      setState("ready");
-    } catch (err) {
-      setErrorMsg(err instanceof Error ? err.message : "Evaluasi gagal dibuat.");
-      setState("error");
-    }
-  }, [session]);
+    },
+    [session],
+  );
 
   useEffect(() => {
     if (!sessionId) return;
@@ -140,21 +154,33 @@ function FeedbackContent() {
     }
     setSession(found);
     setLoaded(true);
-    // Feedback fallback (dari sesi selesai) tetap di-upgrade oleh AI.
-    if (found.feedback && found.feedback.source !== "fallback") {
+    // Evaluasi apa pun (AI maupun otomatis) langsung ditampilkan —
+    // tidak menunggu panggilan AI.
+    if (found.feedback) {
       setState("ready");
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [sessionId]);
 
+  // Buat evaluasi hanya bila sesi belum punya hasil sama sekali.
   useEffect(() => {
     if (
       loaded &&
       session &&
-      (!session.feedback || session.feedback.source === "fallback") &&
-      state !== "loading"
+      !session.feedback &&
+      state !== "loading" &&
+      state !== "ready"
     ) {
       void generateFeedback();
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [loaded, session?.id]);
+
+  // Sempurnakan evaluasi otomatis (fallback) dengan AI di latar belakang —
+  // hasil yang sudah tampil tidak disembunyikan selama proses ini.
+  useEffect(() => {
+    if (loaded && session && session.feedback?.source === "fallback") {
+      void generateFeedback({ background: true });
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [loaded, session?.id]);

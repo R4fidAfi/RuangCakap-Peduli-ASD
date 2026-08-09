@@ -51,6 +51,7 @@ export async function streamChatCompletion(input: {
       stream: true,
     }),
     cache: "no-store",
+    signal: AbortSignal.timeout(45000),
   });
 
   if (!upstream.ok) {
@@ -146,21 +147,32 @@ export async function completeChatCompletion(input: {
     };
   }
 
-  const upstream = await fetch(`${BASE_URL}/chat/completions`, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${API_KEY}`,
-    },
-    body: JSON.stringify({
-      model: MODEL,
-      messages: input.messages,
-      temperature: input.temperature ?? 0.4,
-      max_tokens: input.maxTokens ?? 1000,
-      stream: false,
-    }),
-    cache: "no-store",
-  });
+  let upstream: Response;
+  try {
+    upstream = await fetch(`${BASE_URL}/chat/completions`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${API_KEY}`,
+      },
+      body: JSON.stringify({
+        model: MODEL,
+        messages: input.messages,
+        temperature: input.temperature ?? 0.4,
+        max_tokens: input.maxTokens ?? 1000,
+        stream: false,
+      }),
+      cache: "no-store",
+      signal: AbortSignal.timeout(30000),
+    });
+  } catch (err) {
+    console.error("[ai] feedback upstream timeout/error:", err);
+    return {
+      ok: false,
+      status: 504,
+      message: "Layanan AI tidak merespons tepat waktu.",
+    };
+  }
 
   if (!upstream.ok) {
     const detail = await upstream.text().catch(() => "");
