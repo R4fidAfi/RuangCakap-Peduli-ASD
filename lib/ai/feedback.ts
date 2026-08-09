@@ -22,6 +22,8 @@ export type FeedbackResult = {
   strengths: string[];
   suggestions: string[];
   exampleResponses: string[];
+  /** "ai" = evaluasi AI; "fallback" = evaluasi otomatis (AI gagal). */
+  source?: "ai" | "fallback";
 };
 
 export const FEEDBACK_ASPECTS: Array<{ id: string; label: string }> = [
@@ -162,5 +164,175 @@ export function parseFeedbackResponse(raw: string): FeedbackResult {
     strengths: asStringArray(data.strengths),
     suggestions: asStringArray(data.suggestions),
     exampleResponses: asStringArray(data.exampleResponses),
+  };
+}
+
+// ============================================================
+// FALLBACK EVALUATOR (deterministik)
+// Dipakai bila API AI tidak tersedia/gagal — evaluasi TETAP
+// muncul dengan 6 aspek yang sama, dinilai dari perilaku
+// percakapan nyata pengguna (kata kunci & struktur giliran).
+// ============================================================
+
+const OPENING_WORDS = [
+  "halo", "hai", "assalamu", "selamat", "permisi", "pagi", "siang",
+  "sore", "malam", "hallo", "hy", "hi", "halo pak", "halo bu",
+];
+const CLOSING_WORDS = [
+  "terima kasih", "makasih", "thanks", "sampai jumpa", "sampai ketemu",
+  "dadah", "dah", "bye", "selamat tinggal", "duluan", "permisi dulu",
+  "sampai bertemu", "goodbye",
+];
+const POLITE_WORDS = [
+  "terima kasih", "makasih", "thanks", "tolong", "permisi", "maaf",
+  "mohon", "pak", "bu", "kak", "mbak", "mas", "silakan", "silahkan",
+  "minta tolong",
+];
+const QUESTION_WORDS = [
+  "apa", "siapa", "kapan", "di mana", "ke mana", "dari mana", "bagaimana",
+  "berapa", "apakah", "bisa", "boleh", "berapakah", "yang mana", "kenapa",
+  "mengapa",
+];
+
+function clamp(n: number): number {
+  return Math.max(0, Math.min(100, Math.round(n)));
+}
+
+/** Bangun evaluasi otomatis (fallback) dari transkrip percakapan. */
+export function buildFallbackFeedback(input: {
+  courseId: string;
+  level: LevelNumber;
+  turns: ChatTurn[];
+}): FeedbackResult {
+  const course = getCourse(input.courseId);
+  const userTurns = input.turns.filter((t) => t.role === "user");
+  const texts = userTurns.map((t) => t.text.toLowerCase());
+
+  const avgWords = (() => {
+    if (userTurns.length === 0) return 0;
+    const total = userTurns.reduce((sum, t) => sum + t.text.trim().split(/\s+/).length, 0);
+    return total / userTurns.length;
+  })();
+
+  const hasOpening = texts.some((t) => OPENING_WORDS.some((w) => t.includes(w)));
+  const openingFirst =
+    userTurns.length > 0 &&
+    OPENING_WORDS.some((w) => texts[0].includes(w));
+  const hasClosing = texts.some((t) => CLOSING_WORDS.some((w) => t.includes(w)));
+  const hasPolite = texts.some((t) => POLITE_WORDS.some((w) => t.includes(w)));
+  const questionCount = texts.reduce(
+    (sum, t) =>
+      sum +
+      (t.includes("?") ? 1 : 0) +
+      QUESTION_WORDS.filter((w) => t.includes(w)).length,
+    0,
+  );
+  const hasClarification = questionCount > 0;
+
+  const score = (id: string): number => {
+    switch (id) {
+      case "relevansi": {
+        let s = 70;
+        if (avgWords >= 8) s += 15;
+        else if (avgWords >= 5) s += 10;
+        else if (avgWords >= 3) s += 5;
+        else if (avgWords > 0 && avgWords < 3) s -= 10;
+        return clamp(s);
+      }
+      case "kejelasan": {
+        let s = 70;
+        if (avgWords >= 10) s += 15;
+        else if (avgWords >= 6) s += 10;
+        else if (avgWords >= 4) s += 5;
+        else if (avgWords > 0 && avgWords < 4) s -= 10;
+        return clamp(s);
+      }
+      case "kesopanan": {
+        let s = 60;
+        if (hasPolite) s += 25;
+        if (hasClosing) s += 10;
+        if (hasOpening) s += 5;
+        return clamp(s);
+      }
+      case "pembuka": {
+        let s = 45;
+        if (openingFirst) s += 45;
+        else if (hasOpening) s += 30;
+        return clamp(s);
+      }
+      case "penutup": {
+        let s = 45;
+        if (hasClosing) s += 45;
+        return clamp(s);
+      }
+      case "klarifikasi": {
+        let s = 45;
+        if (hasClarification) s += 30;
+        if (questionCount >= 2) s += 15;
+        return clamp(s);
+      }
+      default:
+        return 70;
+    }
+  };
+
+  const aspects: FeedbackAspect[] = FEEDBACK_ASPECTS.map((meta) => {
+    const s = score(meta.id);
+    let note: string;
+    if (s >= 85) note = `${meta.label} sudah sangat baik — pertahankan!`;
+    else if (s >= 70) note = `${meta.label} sudah cukup baik, tinggal diasah lagi.`;
+    else if (s >= 55) note = `${meta.label} mulai terlihat — coba lebih sering lagi.`;
+    else note = `${meta.label} bisa ditingkatkan dengan sedikit latihan lagi.`;
+    return { id: meta.id, label: meta.label, score: s, note };
+  });
+
+  const best = [...aspects].sort((a, b) => b.score - a.score);
+  const worst = [...aspects].sort((a, b) => a.score - b.score);
+  const strengths = best
+    .filter((a) => a.score >= 70)
+    .slice(0, 2)
+    .map((a) => `Kamu sudah menunjukkan ${a.label.toLowerCase()} dengan cukup baik.`);
+  if (strengths.length === 0 && userTurns.length > 0) {
+    strengths.push("Kamu sudah berani mencoba berbicara — itu langkah pertama yang penting.");
+  }
+  const suggestions = worst
+    .filter((a) => a.score < 70)
+    .slice(0, 2)
+    .map((a) =>
+      a.id === "pembuka"
+        ? "Coba mulai percakapan dengan sapaan seperti \"Halo\" atau \"Permisi\"."
+        : a.id === "penutup"
+          ? "Coba akhiri percakapan dengan \"Terima kasih\" atau \"Sampai jumpa\"."
+          : a.id === "klarifikasi"
+            ? "Jangan ragu bertanya dengan kata tanya seperti \"Berapa...?\" atau \"Bisa...?\"."
+            : `Latihan kecil untuk ${a.label.toLowerCase()}: jawab dengan kalimat utuh.`,
+    );
+
+  const exampleResponses = [
+    "Halo, permisi. Saya mau bertanya.",
+    "Terima kasih banyak atas bantuannya.",
+    "Maaf, bisa diulang? Saya belum terlalu paham.",
+  ];
+
+  const avgScore = Math.round(
+    aspects.reduce((sum, a) => sum + a.score, 0) / aspects.length,
+  );
+  const title = course ? course.title : "latihan ini";
+  const summary =
+    userTurns.length === 0
+      ? `Latihan "${title}" belum ada jawaban yang tercatat. Tidak apa-apa — coba lagi, satu kalimat kecil sudah bagus.`
+      : avgScore >= 80
+        ? `Latihan "${title}" berjalan dengan baik! Kamu sudah membangun percakapan dengan cukup percaya diri.`
+        : avgScore >= 60
+          ? `Latihan "${title}" sudah berjalan. Kamu berani mencoba — dengan sedikit latihan tambahan, pasti makin lancar.`
+          : `Latihan "${title}" adalah langkah awal yang baik. Semakin sering berlatih, semakin nyaman kamu berbicara.`;
+
+  return {
+    summary,
+    aspects,
+    strengths,
+    suggestions,
+    exampleResponses,
+    source: "fallback",
   };
 }

@@ -1,5 +1,9 @@
 import { NextRequest } from "next/server";
-import { buildFeedbackMessages, parseFeedbackResponse } from "@/lib/ai/feedback";
+import {
+  buildFallbackFeedback,
+  buildFeedbackMessages,
+  parseFeedbackResponse,
+} from "@/lib/ai/feedback";
 import { completeChatCompletion } from "@/lib/ai/client";
 import type { LevelNumber } from "@/lib/scenarios";
 import type { ChatTurn } from "@/lib/ai/types";
@@ -60,24 +64,32 @@ export async function POST(req: NextRequest) {
     return jsonError("Skenario tidak ditemukan.", 404, "SCENARIO_NOT_FOUND");
   }
 
-  const result = await completeChatCompletion({
-    messages,
-    temperature: 0.4,
-    maxTokens: 1100,
-  });
-  if (!result.ok) {
-    return jsonError(result.message, result.status === 503 ? 503 : 502, "AI_ERROR");
+  // Coba evaluasi AI; bila gagal (AI belum dikonfigurasi / error),
+  // gunakan evaluasi otomatis agar evaluasi SELALU muncul.
+  try {
+    const result = await completeChatCompletion({
+      messages,
+      temperature: 0.4,
+      maxTokens: 1100,
+    });
+    if (result.ok) {
+      try {
+        const parsed = parseFeedbackResponse(result.content);
+        return Response.json({ ...parsed, source: "ai" });
+      } catch (err) {
+        console.error("[feedback] parse error, pakai fallback:", err);
+      }
+    } else {
+      console.error("[feedback] AI error, pakai fallback:", result.message);
+    }
+  } catch (err) {
+    console.error("[feedback] AI gagal, pakai fallback:", err);
   }
 
-  try {
-    const parsed = parseFeedbackResponse(result.content);
-    return Response.json(parsed);
-  } catch (err) {
-    console.error("[feedback] parse error", err);
-    return jsonError(
-      "Hasil evaluasi AI tidak dapat dibaca. Silakan coba lagi.",
-      502,
-      "FEEDBACK_PARSE_ERROR",
-    );
-  }
+  const fallback = buildFallbackFeedback({
+    courseId: courseId.trim(),
+    level: levelNum as LevelNumber,
+    turns: cleanTurns,
+  });
+  return Response.json(fallback);
 }

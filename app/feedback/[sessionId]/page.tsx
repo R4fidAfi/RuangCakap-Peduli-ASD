@@ -231,6 +231,17 @@ function FeedbackContent() {
         </div>
       )}
 
+      {state === "ready" && feedback?.source === "fallback" && (
+        <div className="mt-8 flex items-start gap-2.5 rounded-2xl border border-mist-200 bg-mist-50 px-4 py-3 text-xs leading-relaxed text-mist-700">
+          <Sparkles className="mt-0.5 h-4 w-4 shrink-0" />
+          <p>
+            Evaluasi ini dibuat otomatis dari pola percakapanmu (penyedia AI
+            belum terhubung di lingkungan ini). Enam aspek tetap dinilai —
+            hasilnya tetap tersimpan di riwayat.
+          </p>
+        </div>
+      )}
+
       {state === "error" && (
         <div className="mt-8 rounded-3xl border border-sun-100 bg-sun-100/50 p-10 text-center">
           <h2 className="text-lg font-bold text-forest-700">
